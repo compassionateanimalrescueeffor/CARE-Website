@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compassionate Animal Rescue Effort (CARE) | Phase 1 Shelter Fundraiser</title>
+  <meta name="description" content="Help CARE build a safe haven for rescued, abandoned, and injured animals. Donate to Phase 1 of our shelter equipment campaign today.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="shortcut icon" href="assets/care_logo.jpg">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+     1. NAVIGATION BAR
+     ========================================================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo" aria-label="Compassionate Animal Rescue Effort (CARE) Home">
+        <img src="assets/care_logo.jpg" alt="Compassionate Animal Rescue Effort (CARE) Logo" class="nav-logo-img">
+        <div class="logo-text-block">
+          <span class="logo-title">Compassionate Animal Rescue Effort</span>
+          <span class="logo-sub">(CARE)</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#campaign" class="nav-link">Campaign</a></li>
+        <li><a href="supplies.html" class="nav-link">Supplies Needed</a></li>
+        <li><a href="#stories" class="nav-link">Rescue Stories</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary" onclick="redirectToPayment(50)">
+          <i data-lucide="heart"></i> Donate Now
+        </button>
+        <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+     2. HERO SECTION
+     ========================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content animate-on-scroll fade-left">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span> Phase 1 Official Fundraiser
+        </div>
+        
+        <h1 class="hero-headline">
+          Help Us Build a <span>Safe Haven</span> for Animals
+        </h1>
+        
+        <p class="hero-subheadline">
+          We're raising funds for Phase 1 of a new animal rescue shelter. Every donation helps provide the essential equipment and supplies needed to begin rescuing abandoned and injured animals.
+        </p>
+
+        <div class="hero-stats-row">
+          <div class="hero-stat-item">
+            <h4 id="hero-raised-display">$0</h4>
+            <p>Raised of $3,500 Goal</p>
+          </div>
+          <div class="hero-stat-item">
+            <h4>0</h4>
+            <p>Supporters So Far</p>
+          </div>
+          <div class="hero-stat-item">
+            <h4>Phase 1</h4>
+            <p>Equipment Purchase</p>
+          </div>
+        </div>
+
+        <div class="hero-ctas">
+          <button class="btn btn-primary btn-large" onclick="redirectToPayment(50)">
+            <i data-lucide="heart"></i> Donate Now
+          </button>
+          <a href="#campaign" class="btn btn-secondary btn-large">
+            <i data-lucide="info"></i> Learn More
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper animate-on-scroll fade-right">
+        <img src="assets/hero_rescued_pets.jpg" alt="Rescued dog and cat side by side looking hopeful">
+        
+        <div class="hero-floating-card glass-panel">
+          <div class="floating-card-header">
+            <span class="floating-card-title">Phase 1 Campaign Status</span>
+            <span class="floating-card-goal" id="hero-floating-goal">0% of $3,500</span>
+          </div>
+          <div class="progress-bar-container" style="height: 10px; margin-bottom: 0;">
+            <div class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     3. CAMPAIGN PROGRESS SECTION
+     ========================================================================== -->
+  <section class="campaign-progress-section" id="campaign">
+    <div class="container">
+      <div class="progress-card animate-on-scroll scale-up">
+        <div class="progress-header">
+          <div>
+            <span class="phase-pill">Phase 1 of 3</span>
+            <h2 class="progress-raised">
+              <span id="raised-amount">$0</span>
+              <span>raised of <strong id="goal-amount">$3,500</strong> goal</span>
+            </h2>
+          </div>
+          <div class="progress-target">
+            <div class="progress-target-val" id="percent-complete">0%</div>
+            <div class="progress-target-lbl">Completed</div>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+
+        <div class="progress-metrics">
+          <div class="metric-box">
+            <div class="metric-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <div class="metric-info">
+              <h5 id="supporters-count">0 (Be the first!)</h5>
+              <p>Campaign Donors</p>
+            </div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-icon">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="metric-info">
+              <h5>Direct Equipment Funding</h5>
+              <p>Transparent Budget Allocation</p>
+            </div>
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-icon">
+              <i data-lucide="clock"></i>
+            </div>
+            <div class="metric-info">
+              <h5>Newly Launched</h5>
+              <p>Phase 1 Equipment Purchase</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     4. ABOUT THE CAMPAIGN & FINANCIAL TRANSPARENCY
+     ========================================================================== -->
+  <section class="about-section" id="about">
+    <div class="container about-grid">
+      <div class="about-image-card animate-on-scroll fade-left">
+        <img src="assets/shelter_supplies.jpg" alt="Shelter supplies and animal crates prepared for rescue work">
+        <div class="about-badge-overlay">
+          <h5>$3,500 Goal</h5>
+          <p>Funding essential rescue crates, bedding, and first-aid supplies to establish shelter readiness.</p>
+        </div>
+      </div>
+
+      <div class="about-content animate-on-scroll fade-right">
+        <span class="section-tag">
+          <i data-lucide="sparkles"></i> Our Mission
+        </span>
+        <h2 class="section-title">Every Rescue Starts With Hope</h2>
+        
+        <p class="about-content-text">
+          Every year, thousands of animals are left abandoned, sick, or injured without access to safety or proper care. At Compassionate Animal Rescue Effort (CARE), we believe every life is worth fighting for.
+        </p>
+        
+        <p class="about-content-text">
+          This campaign will fund the first phase of establishing a future animal rescue shelter by purchasing essential equipment needed to care for rescued animals. By securing critical crates, medical stations, clean bedding, and rescue equipment, we ensure our emergency team can begin rescuing abandoned and injured animals.
+        </p>
+
+        <div class="transparency-box">
+          <div class="transparency-header">
+            <i data-lucide="file-text"></i>
+            <h3>Financial Transparency</h3>
+          </div>
+          <p>Every contribution supports the current fundraising phase and its stated objectives.</p>
+          <p>Campaign updates will be shared as milestones are reached.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     5. NEEDED SUPPLIES REGISTRY BANNER
+     ========================================================================== -->
+  <section class="supplies-section" id="supplies">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="package-check"></i> Phase 1 Equipment Registry
+        </span>
+        <h2 class="section-title">Needed Supplies Catalog</h2>
+        <p class="section-subtitle">
+          We maintain a transparent, real-time registry of specific food, medical care, crates, and sanitization gear needed to establish our Phase 1 shelter.
+        </p>
+
+        <!-- Category Preview Cards Grid -->
+        <div class="category-cards-overview" style="margin-top: 2.5rem; margin-bottom: 2.5rem;">
+          <a href="supplies.html?cat=food" class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-card-icon">🐾</span>
+              <span class="cat-card-count">7 Needed</span>
+            </div>
+            <h3 class="cat-card-title">Food & Nutrition</h3>
+            <p class="cat-card-desc">Kibble, wet food cans, kitten formula, and treats.</p>
+            <div class="cat-card-action">View Items <i data-lucide="arrow-right"></i></div>
+          </a>
+
+          <a href="supplies.html?cat=medical" class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-card-icon">💊</span>
+              <span class="cat-card-count">7 Needed</span>
+            </div>
+            <h3 class="cat-card-title">Medical Supplies</h3>
+            <p class="cat-card-desc">Dewormers, flea preventatives, and eye drops.</p>
+            <div class="cat-card-action">View Items <i data-lucide="arrow-right"></i></div>
+          </a>
+
+          <a href="supplies.html?cat=bedding" class="cat-card">
+            <div class="cat-card-header">
+              <span class="cat-card-icon">🛏</span>
+              <span class="cat-card-count">7 Needed</span>
+            </div>
+            <h3 class="cat-card-title">Bedding & Comfort</h3>
+            <p class="cat-card-desc">Orthopedic beds, blankets, and thermal pads.</p>
+            <div class="cat-card-action">View Items <i data-lucide="arrow-right"></i></div>
+          </a>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <a href="supplies.html" class="btn btn-primary btn-large">
+            <i data-lucide="shopping-bag"></i> Explore Full Supplies Catalog
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ==========================================================================
+     6. ANIMATED IMPACT STATISTICS (NEW)
+     ========================================================================== -->
+  <section class="stats-section" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-icon">❤️</span>
+          <div class="stat-number" data-target="145" data-suffix="+">0+</div>
+          <div class="stat-label">Animals Rescued</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">🍖</span>
+          <div class="stat-number" data-target="18500" data-suffix="+">0+</div>
+          <div class="stat-label">Meals Provided</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">💉</span>
+          <div class="stat-number" data-target="980" data-suffix="+">0+</div>
+          <div class="stat-label">Medical Treatments</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">🏠</span>
+          <div class="stat-number" data-target="76" data-suffix="">0</div>
+          <div class="stat-label">Forever Homes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     7. DONATION IMPACT (PRESET TIERS)
+     ========================================================================== -->
+  <section class="impact-section" id="donate">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="heart-handshake"></i> Choose Your Support
+        </span>
+        <h2 class="section-title">Donation Impact</h2>
+        <p class="section-subtitle">
+          Choose a pre-set amount or enter your own custom contribution. Every dollar moves us closer to opening our doors.
+        </p>
+
+        <div class="donation-controls">
+          <div class="frequency-toggle">
+            <button class="freq-btn active" data-freq="one-time">One-Time</button>
+            <button class="freq-btn" data-freq="monthly">Monthly Giving</button>
+          </div>
+
+          <select class="currency-select" id="currency-select" aria-label="Select currency">
+            <option value="USD">$ USD (US Dollar)</option>
+            <option value="EUR">€ EUR (Euro)</option>
+            <option value="GBP">£ GBP (British Pound)</option>
+            <option value="CAD">CA$ CAD (Canadian Dollar)</option>
+            <option value="AUD">A$ AUD (Australian Dollar)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="impact-grid animate-on-scroll">
+        <div class="impact-card" data-usd="10">
+          <div>
+            <h3 class="impact-amount">$10<span></span></h3>
+            <p class="impact-desc">Helps provide nutritious meals.</p>
+          </div>
+          <button class="btn btn-secondary">Donate $10</button>
+        </div>
+
+        <div class="impact-card" data-usd="25">
+          <div>
+            <h3 class="impact-amount">$25<span></span></h3>
+            <p class="impact-desc">Supports emergency medical supplies.</p>
+          </div>
+          <button class="btn btn-secondary">Donate $25</button>
+        </div>
+
+        <div class="impact-card popular" data-usd="50">
+          <span class="popular-badge">Recommended</span>
+          <div>
+            <h3 class="impact-amount">$50<span></span></h3>
+            <p class="impact-desc">Provides rescue equipment.</p>
+          </div>
+          <button class="btn btn-primary">Donate $50</button>
+        </div>
+
+        <div class="impact-card" data-usd="100">
+          <div>
+            <h3 class="impact-amount">$100<span></span></h3>
+            <p class="impact-desc">Helps purchase essential shelter equipment.</p>
+          </div>
+          <button class="btn btn-secondary">Donate $100</button>
+        </div>
+
+        <div class="impact-card custom-impact-card">
+          <div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Custom Amount</h3>
+            <p class="impact-desc">Every contribution makes a difference.</p>
+            
+            <div class="custom-input-wrapper">
+              <span class="currency-symbol">$</span>
+              <input type="number" class="custom-amount-input" id="custom-amount-input" placeholder="50" min="5" step="5">
+            </div>
+          </div>
+          <button class="btn btn-primary">Donate Custom</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     8. INTERACTIVE DONATION IMPACT CALCULATOR (NEW)
+     ========================================================================== -->
+  <section class="calculator-section" id="calculator">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="calculator"></i> Interactive Calculator
+        </span>
+        <h2 class="section-title">See How Your Gift Creates Change</h2>
+        <p class="section-subtitle">
+          Select an amount below to see the exact real-world impact of your contribution.
+        </p>
+      </div>
+
+      <div class="calc-wrapper animate-on-scroll scale-up">
+        <div class="calc-selector-row">
+          <button class="calc-btn" data-calc-amount="10">$10</button>
+          <button class="calc-btn" data-calc-amount="25">$25</button>
+          <button class="calc-btn active" data-calc-amount="50">$50</button>
+          <button class="calc-btn" data-calc-amount="100">$100</button>
+          <button class="calc-btn" data-calc-amount="250">$250</button>
+        </div>
+
+        <div class="calc-display-card">
+          <h3 class="calc-impact-title" id="calc-impact-title">$50 Contribution</h3>
+          <p class="calc-impact-desc" id="calc-impact-desc">Provides emergency treatment.</p>
+          <p class="calc-impact-detail" id="calc-impact-detail">Funds immediate veterinary diagnostic checks, wound dressing, and antibiotics.</p>
+          <button class="btn btn-primary btn-large" id="calc-donate-btn" onclick="redirectToPayment(50)">
+            <i data-lucide="heart"></i> Donate $50 Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     9. RESCUE STORIES (NEW)
+     ========================================================================== -->
+  <section class="stories-section" id="stories">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="book-open"></i> Inspiring Journey
+        </span>
+        <h2 class="section-title">Real Stories. Real Lives Changed.</h2>
+        <p class="section-subtitle">
+          Meet the animals whose lives were saved thanks to compassionate supporters like you.
+        </p>
+      </div>
+
+      <div class="stories-grid animate-on-scroll">
+        <!-- Story 1: Luna -->
+        <div class="story-card">
+          <div class="story-image-wrap">
+            <img src="assets/rescue_luna.jpg" alt="Rescued dog Luna sitting happily in a sunlit field">
+            <span class="story-badge-status">Ready for Adoption</span>
+          </div>
+          <div class="story-content">
+            <div class="story-header">
+              <h3 class="story-name">Luna</h3>
+              <span class="story-date">Rescued May 2026</span>
+            </div>
+            <p class="story-text">
+              Luna was found malnourished on a roadside. Thanks to rapid triage, nutritious meals, and medical care, she has made a full recovery.
+            </p>
+            <div class="story-progress-box">
+              <div><span>Before:</span> Severe dehydration & weight loss</div>
+              <div><span>Recovery:</span> 100% restored health & energy</div>
+            </div>
+            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
+              <i data-lucide="heart"></i> Support Rescues Like Luna
+            </button>
+          </div>
+        </div>
+
+        <!-- Story 2: Milo -->
+        <div class="story-card">
+          <div class="story-image-wrap">
+            <img src="assets/rescue_milo.jpg" alt="Rescued cat Milo resting comfortably on a blanket">
+            <span class="story-badge-status">Fostered Safely</span>
+          </div>
+          <div class="story-content">
+            <div class="story-header">
+              <h3 class="story-name">Milo</h3>
+              <span class="story-date">Rescued June 2026</span>
+            </div>
+            <p class="story-text">
+              Rescued from an abandoned building during heavy rain. Milo received emergency orthopedic care and is now happily recovering.
+            </p>
+            <div class="story-progress-box">
+              <div><span>Before:</span> Fractured leg & respiratory distress</div>
+              <div><span>Recovery:</span> Fully healed & vaccinated</div>
+            </div>
+            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
+              <i data-lucide="heart"></i> Support Rescues Like Milo
+            </button>
+          </div>
+        </div>
+
+        <!-- Story 3: Barnaby -->
+        <div class="story-card">
+          <div class="story-image-wrap">
+            <img src="assets/rescue_barnaby.jpg" alt="Rescued beagle puppy Barnaby cradled in loving hands">
+            <span class="story-badge-status">In Sanctuary Care</span>
+          </div>
+          <div class="story-content">
+            <div class="story-header">
+              <h3 class="story-name">Barnaby</h3>
+              <span class="story-date">Rescued July 2026</span>
+            </div>
+            <p class="story-text">
+              Found alone at just 8 weeks old. Barnaby was brought to safety, given urgent puppy vaccinations, and receives 24/7 loving care.
+            </p>
+            <div class="story-progress-box">
+              <div><span>Before:</span> High-risk infection & parasite exposure</div>
+              <div><span>Recovery:</span> Clean bill of health & playful spirit</div>
+            </div>
+            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
+              <i data-lucide="heart"></i> Support Rescues Like Barnaby
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     10. BEAUTIFUL ANIMAL GALLERY (NEW)
+     ========================================================================== -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="camera"></i> Life at CARE
+        </span>
+        <h2 class="section-title">Animal Sanctuary Gallery</h2>
+        <p class="section-subtitle">
+          Moments of hope, care, and joyful recovery captured across our rescue operations.
+        </p>
+      </div>
+
+      <div class="gallery-grid animate-on-scroll">
+        <div class="gallery-item" data-caption="Rescued pets receiving love and veterinary medical checks.">
+          <img src="assets/hero_rescued_pets.jpg" alt="Rescued pets together" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+
+        <div class="gallery-item" data-caption="Prepared crates, fleece beds, and shelter equipment.">
+          <img src="assets/shelter_supplies.jpg" alt="Shelter equipment and crates" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+
+        <div class="gallery-item" data-caption="Gentle veterinary triage examination for rescued puppies.">
+          <img src="assets/vet_care_shelter.jpg" alt="Veterinarian examining a rescued puppy" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+
+        <div class="gallery-item" data-caption="Luna enjoying sunny outdoor play sessions after full recovery.">
+          <img src="assets/rescue_luna.jpg" alt="Luna playing in grass" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+
+        <div class="gallery-item" data-caption="Milo cozy on his fleece blanket by the sunny window.">
+          <img src="assets/rescue_milo.jpg" alt="Milo resting by window" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+
+        <div class="gallery-item" data-caption="Barnaby cradled gently by a caring rescue volunteer.">
+          <img src="assets/rescue_barnaby.jpg" alt="Barnaby puppy cradled in volunteer hands" loading="lazy">
+          <div class="gallery-overlay"><i data-lucide="maximize-2"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     11. TRANSPARENT FUND ALLOCATION (NEW)
+     ========================================================================== -->
+  <section class="allocation-section" id="allocation">
+    <div class="container">
+      <div class="allocation-grid">
+        <div class="allocation-content animate-on-scroll fade-left">
+          <span class="section-tag">
+            <i data-lucide="pie-chart"></i> Fiscal Accountability
+          </span>
+          <h2 class="section-title">Transparent Fund Allocation</h2>
+          <p class="about-content-text">
+            We operate with maximum fiscal efficiency so that every single dollar directly impacts animal welfare, emergency triage, and shelter infrastructure.
+          </p>
+          <p class="about-content-text">
+            Our Phase 1 budget breakdown ensures rigorous stewardship and complete visibility for our supporters.
+          </p>
+        </div>
+
+        <div class="allocation-bars animate-on-scroll fade-right">
+          <div>
+            <div class="allocation-item-header">
+              <span>Food & Nutrition</span>
+              <span>40%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill" data-percent="40"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="allocation-item-header">
+              <span>Medical Care & Vaccines</span>
+              <span>35%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill" data-percent="35"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="allocation-item-header">
+              <span>Shelter Equipment & Maintenance</span>
+              <span>15%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill" data-percent="15"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="allocation-item-header">
+              <span>Rescue Operations & Transport</span>
+              <span>10%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill" data-percent="10"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     12. CAMPAIGN ROADMAP
+     ========================================================================== -->
+  <section class="roadmap-section" id="roadmap">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="map"></i> Strategic Plan
+        </span>
+        <h2 class="section-title">Campaign Roadmap</h2>
+        <p class="section-subtitle">
+          Our structured 3-phase plan to build, equip, and operate a safe haven for animals in need.
+        </p>
+      </div>
+
+      <div class="roadmap-timeline animate-on-scroll">
+        <div class="roadmap-card active">
+          <span class="roadmap-badge current">Phase 1 • Active Now</span>
+          <h3 class="roadmap-title">Launch & Essential Equipment</h3>
+          <div class="roadmap-goal">Goal $3,500</div>
+          <p style="font-size: 0.925rem; color: var(--text-muted);">Purchasing core rescue gear, cages, medical kits, and hygiene supplies to initiate rescue operations.</p>
+          <ul class="roadmap-list">
+            <li>Rescue crates & transport carriers</li>
+            <li>Veterinary first-aid kits</li>
+            <li>Food & sanitization stations</li>
+          </ul>
+          <div class="roadmap-connector"><i data-lucide="chevron-right"></i></div>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="roadmap-badge upcoming">Phase 2 • Upcoming</span>
+          <h3 class="roadmap-title">Facility Preparation</h3>
+          <div class="roadmap-goal">Goal $25,000</div>
+          <p style="font-size: 0.925rem; color: var(--text-muted);">Leasing physical shelter premises, securing indoor/outdoor play runs, and installing climate control systems.</p>
+          <ul class="roadmap-list">
+            <li>Shelter building lease & renovation</li>
+            <li>Dog play yard fencing & artificial turf</li>
+            <li>Isolation rooms for sick animals</li>
+          </ul>
+          <div class="roadmap-connector"><i data-lucide="chevron-right"></i></div>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="roadmap-badge upcoming">Phase 3 • Future Goal</span>
+          <h3 class="roadmap-title">Shelter Operations</h3>
+          <div class="roadmap-goal">Goal $100,000+</div>
+          <p style="font-size: 0.925rem; color: var(--text-muted);">Hiring full-time care staff, launching mobile adoption clinics, and expanding regional rescue coverage.</p>
+          <ul class="roadmap-list">
+            <li>On-site veterinary clinic setup</li>
+            <li>24/7 animal emergency rescue vehicle</li>
+            <li>Community spay & neuter outreach</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     13. TRUST SECTION (WHY SUPPORT CARE)
+     ========================================================================== -->
+  <section class="why-section" id="why">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="shield-check"></i> Trust & Commitment
+        </span>
+        <h2 class="section-title">Why Support CARE</h2>
+        <p class="section-subtitle">
+          We prioritize complete financial transparency, secure payment handling, and lasting impact for every animal saved.
+        </p>
+      </div>
+
+      <div class="why-grid animate-on-scroll">
+        <div class="why-card">
+          <div class="why-icon">
+            <i data-lucide="lock"></i>
+          </div>
+          <h3 class="why-title">🔒 Secure Checkout</h3>
+          <p class="why-desc">Donate securely using credit cards, debit cards, PayPal, and other payment methods available in your region.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 class="why-title">❤️ Every Donation Matters</h3>
+          <p class="why-desc">Every contribution helps fund the current campaign phase.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <i data-lucide="bar-chart-3"></i>
+          </div>
+          <h3 class="why-title">📊 Transparent Campaign</h3>
+          <p class="why-desc">We will share fundraising milestones and project updates with supporters.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <i data-lucide="paw-print"></i>
+          </div>
+          <h3 class="why-title">🐾 Building the Future</h3>
+          <p class="why-desc">Phase 1 lays the foundation for a future rescue shelter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     14. TESTIMONIALS (NEW)
+     ========================================================================== -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="message-square"></i> Donor Words
+        </span>
+        <h2 class="section-title">What Our Supporters Say</h2>
+        <p class="section-subtitle">
+          Read genuine messages from supporters across the globe who stand behind CARE's mission.
+        </p>
+      </div>
+
+      <div class="slider-container animate-on-scroll scale-up">
+        <div class="testimonial-track">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="avatar-circle">ES</div>
+              <div class="star-rating">★★★★★</div>
+              <p class="testimonial-quote">
+                "CARE's transparency and direct impact are unmatched. Seeing the exact equipment being purchased for Phase 1 gave me full confidence in donating."
+              </p>
+              <div class="testimonial-author">Emily S.</div>
+              <div class="testimonial-location">London, United Kingdom</div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="avatar-circle">DM</div>
+              <div class="star-rating">★★★★★</div>
+              <p class="testimonial-quote">
+                "An incredibly compassionate team working tirelessly for abandoned animals. Every milestone update shows real dedication and open stewardship."
+              </p>
+              <div class="testimonial-author">David M.</div>
+              <div class="testimonial-location">Toronto, Canada</div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <div class="avatar-circle">SR</div>
+              <div class="star-rating">★★★★★</div>
+              <p class="testimonial-quote">
+                "Supporting Phase 1 was a no-brainer. Their commitment to establishing a permanent shelter and emergency rescue team is truly inspiring."
+              </p>
+              <div class="testimonial-author">Sophia R.</div>
+              <div class="testimonial-location">Berlin, Germany</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-controls">
+          <button class="slider-btn prev" aria-label="Previous testimonial"><i data-lucide="chevron-left"></i></button>
+          <button class="slider-btn next" aria-label="Next testimonial"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     15. VOLUNTEER & FOSTER SECTION (NEW)
+     ========================================================================== -->
+  <section class="volunteer-section" id="volunteer">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="users"></i> Get Involved
+        </span>
+        <h2 class="section-title">Join Our Compassionate Network</h2>
+        <p class="section-subtitle">
+          Beyond financial support, there are many meaningful ways to give your time and love to animals in need.
+        </p>
+      </div>
+
+      <div class="volunteer-grid animate-on-scroll">
+        <div class="volunteer-card">
+          <div class="volunteer-icon">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3 class="volunteer-title">Why Volunteer</h3>
+          <p class="volunteer-desc">Directly help rescued animals recover, socialize, and thrive in a safe environment.</p>
+        </div>
+
+        <div class="volunteer-card">
+          <div class="volunteer-icon">
+            <i data-lucide="clock"></i>
+          </div>
+          <h3 class="volunteer-title">Flexible Opportunities</h3>
+          <p class="volunteer-desc">Choose shifts that fit your personal schedule, from weekend feeding to weekday transport.</p>
+        </div>
+
+        <div class="volunteer-card">
+          <div class="volunteer-icon">
+            <i data-lucide="calendar"></i>
+          </div>
+          <h3 class="volunteer-title">Community Events</h3>
+          <p class="volunteer-desc">Help host local adoption drives, awareness campaigns, and community fundraiser fairs.</p>
+        </div>
+
+        <div class="volunteer-card">
+          <div class="volunteer-icon">
+            <i data-lucide="truck"></i>
+          </div>
+          <h3 class="volunteer-title">Rescue Assistance</h3>
+          <p class="volunteer-desc">Assist our field emergency dispatch team during animal rescue transport missions.</p>
+        </div>
+
+        <div class="volunteer-card">
+          <div class="volunteer-icon">
+            <i data-lucide="home"></i>
+          </div>
+          <h3 class="volunteer-title">Foster Program</h3>
+          <p class="volunteer-desc">Open your home temporarily to give a rescued pet a quiet, loving space to heal.</p>
+        </div>
+      </div>
+
+      <div class="text-center animate-on-scroll">
+        <button class="btn btn-primary btn-large" onclick="redirectToPayment(50)">
+          <i data-lucide="user-plus"></i> Join as a Volunteer / Foster
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     16. NEWSLETTER SUBSCRIPTION (NEW)
+     ========================================================================== -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="container">
+      <div class="newsletter-card animate-on-scroll scale-up">
+        <h2 class="newsletter-title">Stay Connected with CARE</h2>
+        <p class="newsletter-subtitle">
+          Receive regular, transparent milestone reports, rescue stories, and shelter build progress photos.
+        </p>
+
+        <form class="newsletter-form" id="newsletter-form">
+          <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+          <button type="submit" class="btn btn-primary btn-large">
+            <i data-lucide="send"></i> Subscribe
+          </button>
+        </form>
+
+        <div class="newsletter-success" id="newsletter-success">
+          ✓ Thank you for subscribing! We'll keep you updated on Phase 1 progress.
+        </div>
+
+        <p class="newsletter-privacy">🔒 We respect your privacy. Unsubscribe anytime with 1-click.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     17. FREQUENTLY ASKED QUESTIONS (FAQ)
+     ========================================================================== -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <span class="section-tag">
+          <i data-lucide="help-circle"></i> Campaign Info
+        </span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">
+          Got questions about our campaign or how your donation is processed? Find clear answers below.
+        </p>
+      </div>
+
+      <div class="faq-accordion animate-on-scroll">
+        <div class="faq-item active">
+          <button class="faq-question" aria-expanded="true">
+            <span>Where does my donation go?</span>
+            <div class="faq-toggle-icon"><i data-lucide="chevron-down"></i></div>
+          </button>
+          <div class="faq-answer">
+            100% of funds raised during Phase 1 are allocated directly to purchasing essential rescue equipment, animal crates, food stations, medical kits, and blankets required to start rescue operations.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How are payments processed?</span>
+            <div class="faq-toggle-icon"><i data-lucide="chevron-down"></i></div>
+          </button>
+          <div class="faq-answer">
+            Clicking any donation button securely redirects you to our payment gateway where you can complete your contribution using credit cards, debit cards, PayPal, or localized payment options.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How will updates be shared?</span>
+            <div class="faq-toggle-icon"><i data-lucide="chevron-down"></i></div>
+          </button>
+          <div class="faq-answer">
+            Campaign progress updates, equipment receipt breakdowns, and photos of acquired supplies will be published regularly directly on this campaign page and shared with supporters as milestones are reached.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I donate any amount?</span>
+            <div class="faq-toggle-icon"><i data-lucide="chevron-down"></i></div>
+          </button>
+          <div class="faq-answer">
+            Yes! You can donate any custom amount. Every single contribution brings us one step closer to reaching our $3,500 goal for Phase 1.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     18. FINAL CTA BANNER
+     ========================================================================== -->
+  <section class="final-cta-section" id="cta">
+    <div class="container">
+      <div class="cta-banner animate-on-scroll scale-up">
+        <h2 class="cta-headline">Together We Can Build a Safe Haven</h2>
+        <p class="cta-text">
+          Every rescued animal deserves food, shelter, medical care, and love. Help us take the first step toward creating a safe place where lives can be saved.
+        </p>
+        <button class="btn btn-white btn-large" onclick="redirectToPayment(50)">
+          <i data-lucide="heart"></i> Donate Now
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     19. FOOTER
+     ========================================================================== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo" aria-label="Compassionate Animal Rescue Effort (CARE) Home">
+            <img src="assets/care_logo.jpg" alt="Compassionate Animal Rescue Effort (CARE) Logo" class="nav-logo-img">
+            <div class="logo-text-block">
+              <span class="logo-title" style="color: #FFFFFF;">Compassionate Animal Rescue Effort</span>
+              <span class="logo-sub" style="color: var(--primary);">(CARE)</span>
+            </div>
+          </a>
+          <p>
+            Compassionate Animal Rescue Effort (CARE) is an initiative dedicated to raising funds for animal shelter equipment and rescue operations.
+          </p>
+          <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#campaign">Campaign</a></li>
+            <li><a href="#supplies">Supplies Needed</a></li>
+            <li><a href="#stories">Rescue Stories</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Legal & Information</h4>
+          <ul class="footer-links">
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms</a></li>
+            <li><a href="#about">Financial Transparency</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Contact</h4>
+          <ul class="footer-links" id="contact">
+            <li><i data-lucide="mail" style="width: 16px; display: inline;"></i> <a href="mailto:compassionateanimalrescueeffor@gmail.com">compassionateanimalrescueeffor@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Compassionate Animal Rescue Effort (CARE). All rights reserved.</p>
+        <p>Phase 1 Animal Rescue Shelter Equipment Fund</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Donation Bag Bar -->
+  <div class="donation-bag-bar" id="donation-bag-bar">
+    <div class="container bag-bar-container">
+      <div class="bag-bar-info">
+        <span class="bag-bar-title">🎁 Selected Supplies Bag</span>
+        <span class="bag-bar-meta"><span id="bag-item-count">0 Items</span> • Estimated Value: <strong id="bag-total-val">$0</strong></span>
+      </div>
+      <button class="btn btn-primary" onclick="openLocationModal()">
+        Continue to Retailer Selection <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Location & Partner Retailer Modal (State + ZIP ONLY) -->
+  <div class="modal-overlay" id="location-modal" role="dialog" aria-label="Select Delivery Region">
+    <div class="modal-container">
+      <button class="modal-close" id="location-close" aria-label="Close modal">&times;</button>
+      
+      <div id="location-step-1">
+        <h3 class="modal-title">Select Region for Retailer Delivery</h3>
+        <p class="modal-subtitle">We only need your State and ZIP/Postal Code to match available partner supply fulfillment hubs. No personal address required.</p>
+
+        <form id="location-form">
+          <div class="form-group">
+            <label class="form-label" for="loc-state">State / Province</label>
+            <select class="form-input" id="loc-state" required>
+              <option value="">Select State or Region</option>
+              <option value="California">California</option>
+              <option value="New York">New York</option>
+              <option value="Texas">Texas</option>
+              <option value="Florida">Florida</option>
+              <option value="Ontario">Ontario (Canada)</option>
+              <option value="London">London / UK Region</option>
+              <option value="Other">Other International Region</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loc-zip">ZIP / Postal Code</label>
+            <input type="text" class="form-input" id="loc-zip" placeholder="e.g. 90210 or M5V 2T6" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+            View Available Retailers <i data-lucide="arrow-right"></i>
+          </button>
+
+          <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+            🔒 Privacy Guarantee: No street address, house number, or personal details requested.
+          </p>
+        </form>
+      </div>
+
+      <div id="retailer-results" style="display: none;">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Gallery Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-label="Image Lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image lightbox">&times;</button>
+      <img src="" alt="" id="lightbox-img">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Application Engine JS -->
+  <script src="app.js"></script>
+  
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+

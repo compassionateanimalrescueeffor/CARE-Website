@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplies Needed Donation Catalog | Compassionate Animal Rescue Effort (CARE)</title>
+  <meta name="description" content="Browse and donate essential Phase 1 rescue equipment, food, medical supplies, and shelter gear for Compassionate Animal Rescue Effort (CARE).">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+<body class="catalog-page-body">
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" aria-label="Compassionate Animal Rescue Effort (CARE) Home">
+        <img src="assets/care_logo.jpg" alt="Compassionate Animal Rescue Effort (CARE) Logo" class="nav-logo-img">
+        <div class="logo-text-block">
+          <span class="logo-title">Compassionate Animal Rescue Effort</span>
+          <span class="logo-sub">(CARE)</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#campaign" class="nav-link">Campaign</a>
+        <a href="supplies.html" class="nav-link active">Supplies Needed</a>
+        <a href="index.html#stories" class="nav-link">Rescue Stories</a>
+        <a href="index.html#gallery" class="nav-link">Gallery</a>
+        <a href="index.html#roadmap" class="nav-link">Roadmap</a>
+        <a href="index.html#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <select class="currency-select" id="currency-select" aria-label="Select Currency">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="CAD">CAD (CA$)</option>
+          <option value="AUD">AUD (A$)</option>
+        </select>
+        <button class="btn btn-primary nav-donate-btn" onclick="redirectToPayment(50)">
+          <i data-lucide="heart"></i> Donate Now
+        </button>
+        <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Catalog Page Wrapper -->
+  <main class="supplies-page-wrap">
+    
+    <!-- Hero Banner -->
+    <section class="supplies-hero-banner">
+      <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+          <a href="index.html"><i data-lucide="home"></i> Home</a>
+          <span class="bc-sep">/</span>
+          <span class="bc-current" id="bc-current-text">Supplies Needed Catalog</span>
+        </nav>
+
+        <div class="supplies-hero-content">
+          <span class="section-tag" style="background: rgba(255,255,255,0.15); color: #FFFFFF; border-color: rgba(255,255,255,0.25);">
+            <i data-lucide="package-check"></i> Phase 1 Equipment Registry
+          </span>
+          <h1 class="supplies-hero-title">CARE Equipment & Supply Catalog</h1>
+          <p class="supplies-hero-subtitle">
+            Browse needed supplies with real retail market prices. Select items to fulfill directly for our Phase 1 shelter setup through authorized retail partners.
+          </p>
+
+          <!-- Live Search Bar -->
+          <div class="catalog-search-wrap">
+            <div class="search-input-box">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="catalog-search" placeholder="Search by product name, brand, or keyword (e.g. Purina, Frontline, Crate, Litter)..." aria-label="Search catalog products">
+              <button class="search-clear-btn" id="search-clear" aria-label="Clear search">&times;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Catalog Section -->
+    <section class="catalog-main-section">
+      <div class="container">
+        <div class="catalog-layout-grid">
+          
+          <!-- Sidebar Filter Card -->
+          <aside class="catalog-sidebar">
+            <div class="filter-card">
+              <div class="filter-header">
+                <h3><i data-lucide="sliders-horizontal"></i> Filter Catalog</h3>
+                <button class="reset-filter-btn" id="reset-all-filters">Reset All</button>
+              </div>
+
+              <!-- Animal Type Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Target Animal</label>
+                <div class="filter-options">
+                  <button class="filter-chip active" data-filter="animal" data-value="all">All Animals</button>
+                  <button class="filter-chip" data-filter="animal" data-value="cat">🐱 Cats</button>
+                  <button class="filter-chip" data-filter="animal" data-value="dog">🐶 Dogs</button>
+                  <button class="filter-chip" data-filter="animal" data-value="shared">🐾 Shared Items</button>
+                </div>
+              </div>
+
+              <!-- Category Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Category</label>
+                <select class="filter-select" id="filter-category">
+                  <option value="all">All Categories</option>
+                  <option value="food">🐾 Food & Nutrition</option>
+                  <option value="medical">💊 Medical Supplies</option>
+                  <option value="bedding">🛏 Bedding & Comfort</option>
+                  <option value="cleaning">🧹 Cleaning & Hygiene</option>
+                  <option value="feeding">🍽 Feeding Equipment</option>
+                  <option value="enrichment">🧸 Toys & Enrichment</option>
+                  <option value="rescue">🚑 Rescue Equipment</option>
+                  <option value="vet">🏥 Veterinary Equipment</option>
+                  <option value="litter">🚽 Litter & Waste Management</option>
+                </select>
+              </div>
+
+              <!-- Priority Level Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Priority Level</label>
+                <div class="filter-options">
+                  <button class="filter-chip active" data-filter="priority" data-value="all">All</button>
+                  <button class="filter-chip priority-critical-chip" data-filter="priority" data-value="Critical">Critical</button>
+                  <button class="filter-chip priority-high-chip" data-filter="priority" data-value="High">High</button>
+                  <button class="filter-chip" data-filter="priority" data-value="Standard">Standard</button>
+                </div>
+              </div>
+
+              <!-- Price Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Price Range (USD)</label>
+                <select class="filter-select" id="filter-price">
+                  <option value="all">All Prices</option>
+                  <option value="under15">Under $15.00</option>
+                  <option value="15to30">$15.00 – $30.00</option>
+                  <option value="30to50">$30.00 – $50.00</option>
+                  <option value="over50">$50.00+</option>
+                </select>
+              </div>
+
+              <!-- Age Group Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Age Group</label>
+                <select class="filter-select" id="filter-age">
+                  <option value="all">All Ages</option>
+                  <option value="kitten-puppy">Kitten / Puppy</option>
+                  <option value="adult">Adult</option>
+                  <option value="senior">Senior</option>
+                </select>
+              </div>
+
+              <!-- Environment Filter -->
+              <div class="filter-group">
+                <label class="filter-label">Environment</label>
+                <select class="filter-select" id="filter-env">
+                  <option value="all">All Environments</option>
+                  <option value="indoor">Indoor</option>
+                  <option value="outdoor">Outdoor / Triage</option>
+                </select>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main Products Display Area -->
+          <div class="catalog-products-area">
+            
+            <!-- Results Meta Bar -->
+            <div class="catalog-meta-bar">
+              <span class="results-count" id="results-count">Showing 35 products</span>
+              <div class="sort-box">
+                <label for="sort-select">Sort By:</label>
+                <select id="sort-select" class="sort-select">
+                  <option value="all">All Products (Default)</option>
+                  <option value="priority" selected>Priority (Critical First)</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="rating">Highest Rated</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Product Cards Grid (35 Products Rendered Directly in HTML) -->
+            <div class="ecommerce-products-grid" id="ecommerce-products-grid">
+              
+              <!-- 1. Purina Cat Chow Complete Dry Cat Food -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('purina-cat-chow-15')">
+                  <img src="assets/products/cat_food_bag.jpg" alt="Purina Cat Chow Complete Dry Cat Food packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('purina-cat-chow-15')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Purina Cat Chow Complete Dry Cat Food')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Purina</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('purina-cat-chow-15')">Purina Cat Chow Complete Dry Cat Food</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.8</span><span class="reviews-count">(1,420 reviews)</span></div>
+                  <p class="card-desc">Formulated with high-quality protein, essential fatty acids, and 25 vitamins & minerals.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 15 lb Bag</span><span class="spec-pill">Weight: 15.2 lbs</span><span class="spec-pill">High Protein Nutrition</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$22.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>15 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('purina-cat-chow-15', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('purina-cat-chow-15', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('purina-cat-chow-15')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Purina ONE High Protein Dry Cat Food -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('purina-one-cat-16')">
+                  <img src="assets/products/cat_food_bag.jpg" alt="Purina ONE High Protein Dry Cat Food packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-high">High</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('purina-one-cat-16')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Purina ONE High Protein Dry Cat Food')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Purina ONE</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('purina-one-cat-16')">Purina ONE High Protein Dry Cat Food</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.9</span><span class="reviews-count">(980 reviews)</span></div>
+                  <p class="card-desc">Real chicken first ingredient promoting lean muscle and healthy heart for shelter cats.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 16 lb Bag</span><span class="spec-pill">Weight: 16.1 lbs</span><span class="spec-pill">Premium Immune Support</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$31.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>12 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('purina-one-cat-16', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('purina-one-cat-16', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('purina-one-cat-16')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Purina ONE SmartBlend Dry Dog Food -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('purina-one-dog-31')">
+                  <img src="assets/products/dog_food_bag.jpg" alt="Purina ONE SmartBlend Dry Dog Food packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('purina-one-dog-31')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Purina ONE SmartBlend Dry Dog Food')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Purina ONE</span><span class="card-animal-tag">🐶 Dog</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('purina-one-dog-31')">Purina ONE SmartBlend Dry Dog Food</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.8</span><span class="reviews-count">(2,150 reviews)</span></div>
+                  <p class="card-desc">Digestible formula with glucosamine for joint health and radiant coat.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 31.1 lb Bag</span><span class="spec-pill">Weight: 31.3 lbs</span><span class="spec-pill">Canine Joint & Muscle Kibble</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$44.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>10 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('purina-one-dog-31', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('purina-one-dog-31', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('purina-one-dog-31')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. Fancy Feast Classic Paté Wet Cat Food -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('fancy-feast-24')">
+                  <img src="assets/products/cat_food_wet.jpg" alt="Fancy Feast Classic Paté Wet Cat Food packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('fancy-feast-24')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Fancy Feast Classic Paté Wet Cat Food')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Fancy Feast</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('fancy-feast-24')">Fancy Feast Classic Paté Wet Cat Food</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.9</span><span class="reviews-count">(3,120 reviews)</span></div>
+                  <p class="card-desc">Gourmet poultry paté providing vital hydration for malnourished rescued cats.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: Case of 24 (3 oz Cans)</span><span class="spec-pill">Weight: 5.1 lbs</span><span class="spec-pill">Essential Hydration & Recovery</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$24.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>20 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('fancy-feast-24', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('fancy-feast-24', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('fancy-feast-24')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. Purina Friskies Variety Pack Wet Cat Food -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('friskies-wet-40')">
+                  <img src="assets/products/cat_food_wet.jpg" alt="Purina Friskies Variety Pack Wet Cat Food packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-high">High</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('friskies-wet-40')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Purina Friskies Variety Pack Wet Cat Food')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Friskies</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('friskies-wet-40')">Purina Friskies Variety Pack Wet Cat Food</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.7</span><span class="reviews-count">(1,840 reviews)</span></div>
+                  <p class="card-desc">Savory meat and fish gravies in easy-open cans for daily shelter feeding.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: Variety Box of 40</span><span class="spec-pill">Weight: 14.8 lbs</span><span class="spec-pill">Bulk Feeding Supply</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$32.49</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>15 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('friskies-wet-40', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('friskies-wet-40', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('friskies-wet-40')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 6. KMR Kitten Milk Replacer Powder -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('kmr-formula')">
+                  <img src="assets/products/kitten_formula.jpg" alt="KMR Kitten Milk Replacer Powder packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('kmr-formula')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('KMR Kitten Milk Replacer Powder')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">PetAg</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('kmr-formula')">KMR Kitten Milk Replacer Powder</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.9</span><span class="reviews-count">(950 reviews)</span></div>
+                  <p class="card-desc">Matches mother cat milk with taurine, prebiotics, and essential vitamins.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 12 oz Canister</span><span class="spec-pill">Weight: 0.8 lbs</span><span class="spec-pill">Orphan Kitten Nursery Care</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$21.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>12 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('kmr-formula', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('kmr-formula', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('kmr-formula')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 7. Rescue Veterinary Disinfectant Cleaner -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('rescue-disinfectant')">
+                  <img src="assets/products/disinfectant_bottle.jpg" alt="Rescue Veterinary Disinfectant Cleaner photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('rescue-disinfectant')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Rescue Veterinary Disinfectant Cleaner')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Rescue Vet</span><span class="card-animal-tag">🐾 Shared</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('rescue-disinfectant')">Rescue Veterinary Disinfectant Cleaner</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.9</span><span class="reviews-count">(1,350 reviews)</span></div>
+                  <p class="card-desc">Kills parvo, ringworm, and respiratory viruses in 1 minute on hard surfaces.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 32 oz Spray Bottle</span><span class="spec-pill">Weight: 2.4 lbs</span><span class="spec-pill">Hospital-Grade Pathogen Control</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$11.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>25 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('rescue-disinfectant', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('rescue-disinfectant', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('rescue-disinfectant')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 8. Fresh Step Multi-Cat Clumping Cat Litter -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('fresh-step-litter-40')">
+                  <img src="assets/products/cat_litter_bag.jpg" alt="Fresh Step Multi-Cat Clumping Cat Litter packaging photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('fresh-step-litter-40')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Fresh Step Multi-Cat Clumping Cat Litter')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Fresh Step</span><span class="card-animal-tag">🐱 Cat</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('fresh-step-litter-40')">Fresh Step Multi-Cat Clumping Cat Litter</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.8</span><span class="reviews-count">(3,900 reviews)</span></div>
+                  <p class="card-desc">Low-dust 10-day odor control clumping litter for multi-cat shelter cages.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 40 lb Bag</span><span class="spec-pill">Weight: 40.2 lbs</span><span class="spec-pill">Bulk Feline Sanitation</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$23.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>25 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('fresh-step-litter-40', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('fresh-step-litter-40', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('fresh-step-litter-40')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 9. Glad Leak-Proof Puppy Training Pads -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('puppy-pee-pads-100')">
+                  <img src="assets/products/dog_food_bag.jpg" alt="Glad For Pets Leak-Proof Puppy Training Pads photography" loading="lazy">
+                  <span class="card-priority-badge priority-high">High</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('puppy-pee-pads-100')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Glad For Pets Leak-Proof Puppy Training Pads')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Glad</span><span class="card-animal-tag">🐶 Dog</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('puppy-pee-pads-100')">Glad For Pets Leak-Proof Puppy Training Pads</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.8</span><span class="reviews-count">(2,400 reviews)</span></div>
+                  <p class="card-desc">5-layer leak-proof pads converting liquid into gel for clean kennel floors.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 100 Count Box</span><span class="spec-pill">Weight: 8.5 lbs</span><span class="spec-pill">Kennel Lining & House Training</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$29.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>20 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('puppy-pee-pads-100', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('puppy-pee-pads-100', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('puppy-pee-pads-100')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 10. Bounty Quick-Size Paper Towels -->
+              <div class="ecom-product-card">
+                <div class="card-image-wrap" onclick="openProductGallery('paper-towels-12')">
+                  <img src="assets/products/paper_towels_pack.jpg" alt="Bounty Quick-Size Paper Towels photography" loading="lazy">
+                  <span class="card-priority-badge priority-critical">Critical</span>
+                  <div class="card-top-actions" onclick="event.stopPropagation()">
+                    <button class="icon-action-btn" onclick="toggleWishlist('paper-towels-12')" aria-label="Add to Wishlist"><i data-lucide="heart"></i></button>
+                    <button class="icon-action-btn" onclick="shareProduct('Bounty Quick-Size Paper Towels')" aria-label="Share Product"><i data-lucide="share-2"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-brand-row"><span class="card-brand">Bounty</span><span class="card-animal-tag">🐾 Shared</span></div>
+                  <h3 class="card-title" onclick="openProductGallery('paper-towels-12')">Bounty Quick-Size Paper Towels</h3>
+                  <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-val">4.9</span><span class="reviews-count">(4,500 reviews)</span></div>
+                  <p class="card-desc">2x absorbent paper towels essential for cleaning feeding stations and cages.</p>
+                  <div class="card-specs"><span class="spec-pill">Size: 12 Double Rolls</span><span class="spec-pill">Weight: 5.8 lbs</span><span class="spec-pill">Daily Cage Sanitation</span></div>
+                  <div class="card-price-row">
+                    <div><span class="price-label">Estimated Retail Price (USD)</span><span class="card-price">$22.99</span></div>
+                    <div class="needed-box"><span class="stock-status">In Stock</span><span class="needed-val">Needed: <strong>20 units</strong></span></div>
+                  </div>
+                  <div class="card-actions-row">
+                    <div class="qty-selector"><button class="qty-btn minus" onclick="updateQty('paper-towels-12', -1)">-</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty('paper-towels-12', 1)">+</button></div>
+                    <button class="btn btn-primary btn-sm flex-grow" onclick="buySingleProduct('paper-towels-12')">Buy & Donate</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Empty Search State -->
+            <div class="no-products-msg" id="no-products-msg" style="display: none;">
+              <i data-lucide="search-x" style="font-size: 3.5rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+              <h3>No matching products found</h3>
+              <p>Try adjusting your search query or clear active filter selections.</p>
+              <button class="btn btn-secondary" onclick="resetAllFilters()" style="margin-top: 1rem;">
+                Reset All Filters
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Donation Cart Drawer -->
+  <div class="donation-bag-bar" id="donation-bag-bar">
+    <div class="container bag-bar-container">
+      <div class="bag-bar-info">
+        <span class="bag-bar-title">🎁 Selected Supplies Bag</span>
+        <span class="bag-bar-meta"><span id="bag-item-count">0 Items</span> • Estimated Value: <strong id="bag-total-val">$0</strong></span>
+      </div>
+      <button class="btn btn-primary" onclick="proceedToCheckout()">
+        Continue <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Location & Partner Retailer Modal (State + ZIP ONLY) -->
+  <div class="modal-overlay" id="location-modal" role="dialog" aria-label="Select Delivery Region">
+    <div class="modal-container">
+      <button class="modal-close" id="location-close" aria-label="Close modal">&times;</button>
+      
+      <div id="location-step-1">
+        <h3 class="modal-title">Select Region for Retailer Delivery</h3>
+        <p class="modal-subtitle">We only need your State and ZIP/Postal Code to match available partner supply fulfillment hubs. No personal address required.</p>
+
+        <form id="location-form">
+          <div class="form-group">
+            <label class="form-label" for="loc-state">State / Province</label>
+            <select class="form-input" id="loc-state" required>
+              <option value="">Select State or Region</option>
+              <option value="California">California</option>
+              <option value="New York">New York</option>
+              <option value="Texas">Texas</option>
+              <option value="Florida">Florida</option>
+              <option value="Ontario">Ontario (Canada)</option>
+              <option value="London">London / UK Region</option>
+              <option value="Other">Other International Region</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loc-zip">ZIP / Postal Code</label>
+            <input type="text" class="form-input" id="loc-zip" placeholder="e.g. 90210 or M5V 2T6" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+            View Available Retailers <i data-lucide="arrow-right"></i>
+          </button>
+
+          <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+            🔒 Privacy Guarantee: No street address, house number, apartment number, city, phone number, or email requested.
+          </p>
+        </form>
+      </div>
+
+      <div id="retailer-results" style="display: none;">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Image Lightbox Gallery Modal -->
+  <div class="modal-overlay" id="product-lightbox-modal" role="dialog" aria-label="Product Image Lightbox">
+    <div class="modal-container product-gallery-content">
+      <button class="modal-close" id="product-lightbox-close" aria-label="Close product image lightbox">&times;</button>
+      <div class="gallery-image-wrap">
+        <img src="" alt="" id="product-lightbox-img">
+      </div>
+      <div class="gallery-details-box">
+        <h3 id="product-lightbox-title">Product Title</h3>
+        <p class="gallery-specs" id="product-lightbox-specs">Product Specifications</p>
+        <span class="gallery-price" id="product-lightbox-price">$0.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="Compassionate Animal Rescue Effort (CARE) Home">
+            <img src="assets/care_logo.jpg" alt="Compassionate Animal Rescue Effort (CARE) Logo" class="nav-logo-img">
+            <div class="logo-text-block">
+              <span class="logo-title" style="color: #FFFFFF;">Compassionate Animal Rescue Effort</span>
+              <span class="logo-sub" style="color: var(--primary);">(CARE)</span>
+            </div>
+          </a>
+          <p>
+            Compassionate Animal Rescue Effort (CARE) is an initiative dedicated to raising funds for animal shelter equipment and rescue operations.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#campaign">Campaign</a></li>
+            <li><a href="supplies.html">Supplies Needed</a></li>
+            <li><a href="index.html#stories">Rescue Stories</a></li>
+            <li><a href="index.html#roadmap">Roadmap</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Legal & Information</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#privacy">Privacy Policy</a></li>
+            <li><a href="index.html#terms">Terms</a></li>
+            <li><a href="index.html#about">Financial Transparency</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Contact</h4>
+          <ul class="footer-links">
+            <li><i data-lucide="mail" style="width: 16px; display: inline;"></i> <a href="mailto:compassionateanimalrescueeffor@gmail.com">compassionateanimalrescueeffor@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Compassionate Animal Rescue Effort (CARE). All rights reserved.</p>
+        <p>Phase 1 Animal Rescue Shelter Equipment Fund</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Catalog Logic Engine JS -->
+  <script src="supplies.js"></script>
+
+  <script>
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

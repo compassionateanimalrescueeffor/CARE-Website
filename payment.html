@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment | Compassionate Animal Rescue Effort (CARE)</title>
+  <meta name="description" content="Complete your secure donation to CARE. Your contribution directly funds Phase 1 animal rescue shelter equipment.">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <style>
+    /* ── Payment Page Specific Styles ───────────────────────────── */
+    .payment-page-body { padding-top: 6.5rem; background: var(--bg-soft); min-height: 100vh; }
+
+    .payment-page-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .payment-page-wrap { grid-template-columns: 1fr; }
+    }
+
+    /* Order summary sidebar */
+    .payment-summary-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-light);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 7rem;
+    }
+
+    .payment-summary-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .summary-line:last-of-type { border-bottom: none; }
+
+    .summary-line .label { font-weight: 600; }
+
+    .summary-line .value {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .summary-total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 0;
+      margin-top: 0.5rem;
+      border-top: 2px solid var(--border-light);
+    }
+
+    .summary-total-line .label {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .summary-total-line .value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .freq-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      margin-top: 1rem;
+    }
+
+    /* Main payment form card */
+    .payment-form-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-light);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .payment-form-card h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-form-card .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Payment method tabs */
+    .payment-method-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .pay-tab {
+      flex: 1;
+      min-width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 1rem 0.75rem;
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: var(--bg-main);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .pay-tab i { font-size: 1.4rem; }
+
+    .pay-tab:hover { border-color: var(--primary); color: var(--primary-dark); }
+
+    .pay-tab.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* Form fields */
+    .pf-group { margin-bottom: 1.25rem; }
+
+    .pf-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.45rem;
+    }
+
+    .pf-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      outline: none;
+      background: var(--bg-main);
+      transition: border-color var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .pf-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .pf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    @media (max-width: 480px) { .pf-row { grid-template-columns: 1fr; } }
+
+    /* Placeholder panels for future integrations */
+    .placeholder-panel {
+      background: var(--bg-soft);
+      border: 2px dashed var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .placeholder-panel i { font-size: 2.5rem; color: var(--text-light); margin-bottom: 0.75rem; }
+    .placeholder-panel strong { display: block; font-size: 1rem; color: var(--text-main); margin-bottom: 0.35rem; }
+    .placeholder-panel p { font-size: 0.85rem; }
+
+    /* Security strip */
+    .security-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin: 1.5rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .security-strip i { color: var(--primary); flex-shrink: 0; }
+
+    /* Donate CTA */
+    .donate-cta-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      justify-content: center;
+      gap: 0.6rem;
+      border-radius: var(--radius-md);
+    }
+
+    .terms-tiny {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .terms-tiny a { color: var(--primary); font-weight: 600; }
+
+    /* Page breadcrumb header */
+    .payment-page-header {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .payment-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .payment-back-link:hover { color: var(--primary); }
+
+    .payment-page-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 1rem;
+    }
+
+    .payment-page-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
+    }
+
+    /* Success overlay */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-overlay.show { display: flex; }
+
+    .success-box {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+      animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .success-icon-circle {
+      width: 80px; height: 80px;
+      background: var(--primary-light);
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.2rem;
+      color: var(--primary);
+    }
+
+    .success-box h2 { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem; }
+    .success-box p  { color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem; }
+
+    .success-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body class="payment-page-body">
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" aria-label="Compassionate Animal Rescue Effort (CARE) Home">
+        <img src="assets/care_logo.jpg" alt="CARE Logo" class="nav-logo-img">
+        <div class="logo-text-block">
+          <span class="logo-title">Compassionate Animal Rescue Effort</span>
+          <span class="logo-sub">(CARE)</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html#about"    class="nav-link">About</a>
+        <a href="index.html#campaign" class="nav-link">Campaign</a>
+        <a href="supplies.html"       class="nav-link">Supplies Needed</a>
+        <a href="index.html#stories"  class="nav-link">Rescue Stories</a>
+        <a href="index.html#gallery"  class="nav-link">Gallery</a>
+        <a href="index.html#roadmap"  class="nav-link">Roadmap</a>
+        <a href="index.html#faq"      class="nav-link">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <div class="payment-page-header">
+    <a href="javascript:history.back()" class="payment-back-link" id="back-link">
+      <i data-lucide="arrow-left"></i> Back
+    </a>
+    <h1 class="payment-page-title">Complete Your Donation</h1>
+    <p class="payment-page-sub">Secure checkout — your information is encrypted and protected.</p>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="payment-page-wrap">
+
+    <!-- LEFT: Payment Form -->
+    <div class="payment-form-card">
+      <h2>Secure Payment</h2>
+      <p class="subtitle">Choose your preferred payment method below.</p>
+
+      <!-- Payment Method Tabs -->
+      <div class="payment-method-tabs" id="payment-tabs">
+        <button class="pay-tab active" data-method="card" onclick="switchTab('card')">
+          <i data-lucide="credit-card"></i>
+          Credit / Debit
+        </button>
+        <button class="pay-tab" data-method="paypal" onclick="switchTab('paypal')">
+          <i data-lucide="wallet"></i>
+          PayPal
+        </button>
+        <button class="pay-tab" data-method="apple" onclick="switchTab('apple')">
+          <i data-lucide="smartphone"></i>
+          Apple Pay
+        </button>
+        <button class="pay-tab" data-method="google" onclick="switchTab('google')">
+          <i data-lucide="smartphone"></i>
+          Google Pay
+        </button>
+      </div>
+
+      <!-- Card Form (shown by default) -->
+      <div id="form-card">
+        <div class="pf-group">
+          <label class="pf-label" for="card-name">Name on Card</label>
+          <input type="text" class="pf-input" id="card-name" placeholder="Jane Doe" autocomplete="cc-name">
+        </div>
+        <div class="pf-group">
+          <label class="pf-label" for="card-number">Card Number</label>
+          <input type="text" class="pf-input" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" autocomplete="cc-number">
+        </div>
+        <div class="pf-row">
+          <div class="pf-group">
+            <label class="pf-label" for="card-expiry">Expiry Date</label>
+            <input type="text" class="pf-input" id="card-expiry" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp">
+          </div>
+          <div class="pf-group">
+            <label class="pf-label" for="card-cvc">CVC / CVV</label>
+            <input type="text" class="pf-input" id="card-cvc" placeholder="123" maxlength="4" autocomplete="cc-csc">
+          </div>
+        </div>
+      </div>
+
+      <!-- PayPal Placeholder -->
+      <div id="form-paypal" style="display:none;">
+        <div class="placeholder-panel">
+          <i data-lucide="wallet"></i>
+          <strong>PayPal Integration</strong>
+          <p>PayPal payment processing will be connected in a future update. For now, please use Credit / Debit Card.</p>
+        </div>
+      </div>
+
+      <!-- Apple Pay Placeholder -->
+      <div id="form-apple" style="display:none;">
+        <div class="placeholder-panel">
+          <i data-lucide="smartphone"></i>
+          <strong>Apple Pay</strong>
+          <p>Apple Pay will be available once the payment gateway is connected. Please use Credit / Debit Card for now.</p>
+        </div>
+      </div>
+
+      <!-- Google Pay Placeholder -->
+      <div id="form-google" style="display:none;">
+        <div class="placeholder-panel">
+          <i data-lucide="smartphone"></i>
+          <strong>Google Pay</strong>
+          <p>Google Pay will be available once the payment gateway is connected. Please use Credit / Debit Card for now.</p>
+        </div>
+      </div>
+
+      <!-- Security Strip -->
+      <div class="security-strip">
+        <i data-lucide="shield-check"></i>
+        <span>256-bit SSL encryption. Your payment details are never stored on our servers.</span>
+      </div>
+
+      <!-- Donate Button -->
+      <button class="btn btn-primary donate-cta-btn" id="donate-btn" onclick="processDonation()">
+        <i data-lucide="heart"></i>
+        <span id="donate-btn-label">Donate Now</span>
+      </button>
+
+      <p class="terms-tiny">
+        By donating, you agree to our <a href="index.html#terms">Terms of Service</a> and <a href="index.html#privacy">Privacy Policy</a>.
+        Donations are processed securely. CARE is a nonprofit fundraising initiative.
+      </p>
+    </div>
+
+    <!-- RIGHT: Order Summary -->
+    <div class="payment-summary-card">
+      <h3>Donation Summary</h3>
+
+      <div class="summary-line">
+        <span class="label">Donation Type</span>
+        <span class="value" id="summary-freq">One-Time</span>
+      </div>
+
+      <div class="summary-line">
+        <span class="label">Donation Amount</span>
+        <span class="value" id="summary-amount">$50.00</span>
+      </div>
+
+      <div class="summary-line">
+        <span class="label">Currency</span>
+        <span class="value" id="summary-currency">USD</span>
+      </div>
+
+      <div class="summary-total-line">
+        <span class="label">Charged Today</span>
+        <span class="value" id="summary-total">$50.00</span>
+      </div>
+
+      <div class="freq-badge" id="freq-badge">
+        <i data-lucide="gift"></i>
+        <span id="freq-badge-label">One-Time Donation</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="CARE Home">
+            <img src="assets/care_logo.jpg" alt="CARE Logo" class="nav-logo-img">
+            <div class="logo-text-block">
+              <span class="logo-title" style="color:#FFFFFF;">Compassionate Animal Rescue Effort</span>
+              <span class="logo-sub" style="color:var(--primary);">(CARE)</span>
+            </div>
+          </a>
+          <p>Compassionate Animal Rescue Effort (CARE) is an initiative dedicated to raising funds for animal shelter equipment and rescue operations.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#campaign">Campaign</a></li>
+            <li><a href="supplies.html">Supplies Needed</a></li>
+            <li><a href="index.html#stories">Rescue Stories</a></li>
+            <li><a href="index.html#roadmap">Roadmap</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Legal &amp; Information</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#privacy">Privacy Policy</a></li>
+            <li><a href="index.html#terms">Terms</a></li>
+            <li><a href="index.html#about">Financial Transparency</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-column-title">Contact</h4>
+          <ul class="footer-links">
+            <li><i data-lucide="mail" style="width:16px;display:inline;"></i> <a href="mailto:compassionateanimalrescueeffor@gmail.com">compassionateanimalrescueeffor@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Compassionate Animal Rescue Effort (CARE). All rights reserved.</p>
+        <p>Phase 1 Animal Rescue Shelter Equipment Fund</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Success Overlay -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-box">
+      <div class="success-icon-circle"><i data-lucide="check-circle"></i></div>
+      <h2>Thank You!</h2>
+      <p>Your donation has been successfully recorded. Your contribution will directly support rescued animals at CARE's Phase 1 shelter.</p>
+      <div class="success-actions">
+        <a href="supplies.html" class="btn btn-primary">
+          <i data-lucide="shopping-bag"></i> Continue Browsing Supplies
+        </a>
+        <a href="index.html" class="btn btn-secondary">
+          <i data-lucide="home"></i> Return Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Read donation data from localStorage ──────────────────────
+    const SYMBOLS = { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$' };
+
+    let donationData = { amount: 50, freq: 'one-time', currency: 'USD' };
+
+    function loadDonation() {
+      // Check direct donation (from index.html preset/custom buttons)
+      const direct = localStorage.getItem('care_direct_donation');
+      if (direct) {
+        try { donationData = { ...donationData, ...JSON.parse(direct) }; } catch(e) {}
+      }
+
+      // Also check checkout-flow donation (from supplies.html → checkout.html)
+      const checkout = localStorage.getItem('care_checkout');
+      if (checkout) {
+        try {
+          const d = JSON.parse(checkout);
+          if (d.donationType) donationData.freq = d.donationType;
+        } catch(e) {}
+      }
+    }
+
+    function renderSummary() {
+      const sym    = SYMBOLS[donationData.currency] || '$';
+      const amt    = parseFloat(donationData.amount) || 50;
+      const freq   = donationData.freq || 'one-time';
+      const isMonthly = freq === 'monthly';
+
+      const fmtAmt = `${sym}${amt.toFixed(2)}`;
+      const freqLabel = isMonthly ? 'Monthly Giving' : 'One-Time';
+
+      document.getElementById('summary-freq').textContent    = freqLabel;
+      document.getElementById('summary-amount').textContent  = fmtAmt;
+      document.getElementById('summary-currency').textContent = donationData.currency;
+      document.getElementById('summary-total').textContent   = fmtAmt;
+
+      const badge = document.getElementById('freq-badge-label');
+      if (badge) badge.textContent = isMonthly ? 'Monthly Recurring Donation' : 'One-Time Donation';
+
+      const badgeIcon = document.querySelector('#freq-badge i');
+      // swap icon based on freq
+      if (badgeIcon) badgeIcon.setAttribute('data-lucide', isMonthly ? 'repeat' : 'gift');
+
+      const donateLabel = document.getElementById('donate-btn-label');
+      if (donateLabel) donateLabel.textContent = `Donate ${fmtAmt}${isMonthly ? '/mo' : ''}`;
+
+      // Update back link depending on source
+      const direct = localStorage.getItem('care_direct_donation');
+      const backEl = document.getElementById('back-link');
+      if (backEl && !direct) backEl.href = 'checkout.html';
+    }
+
+    // ── Tab switching ─────────────────────────────────────────────
+    window.switchTab = function(method) {
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`[data-method="${method}"]`).classList.add('active');
+
+      ['card','paypal','apple','google'].forEach(m => {
+        const el = document.getElementById(`form-${m}`);
+        if (el) el.style.display = m === method ? 'block' : 'none';
+      });
+    };
+
+    // ── Card number formatting ─────────────────────────────────────
+    const cardNumEl = document.getElementById('card-number');
+    if (cardNumEl) {
+      cardNumEl.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g,'').substring(0,16);
+        e.target.value = v.replace(/(.{4})/g,'$1 ').trim();
+      });
+    }
+    const cardExpEl = document.getElementById('card-expiry');
+    if (cardExpEl) {
+      cardExpEl.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g,'').substring(0,4);
+        if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+        e.target.value = v;
+      });
+    }
+
+    // ── Process donation (placeholder – no real payment) ──────────
+    window.processDonation = function() {
+      const activeMethod = document.querySelector('.pay-tab.active')?.getAttribute('data-method');
+
+      if (activeMethod === 'card') {
+        const name   = document.getElementById('card-name').value.trim();
+        const number = document.getElementById('card-number').value.replace(/\s/g,'');
+        const expiry = document.getElementById('card-expiry').value.trim();
+        const cvc    = document.getElementById('card-cvc').value.trim();
+
+        if (!name)               { alert('Please enter the name on your card.'); return; }
+        if (number.length < 13)  { alert('Please enter a valid card number.');   return; }
+        if (!expiry)             { alert('Please enter the expiry date.');        return; }
+        if (!cvc)                { alert('Please enter the CVC / CVV.');          return; }
+      }
+
+      // Clear stored donation after success
+      localStorage.removeItem('care_direct_donation');
+
+      // Show success overlay
+      document.getElementById('success-overlay').classList.add('show');
+      if (window.lucide) lucide.createIcons();
+    };
+
+    // ── Init ──────────────────────────────────────────────────────
+    loadDonation();
+    renderSummary();
+
+    if (window.lucide) lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+    });
+
+    // Mobile nav toggle
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks  = document.querySelector('.nav-links');
+    if (mobileBtn && navLinks) {
+      mobileBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+    }
+  </script>
+</body>
+</html>

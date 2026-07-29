@@ -1,0 +1,16 @@
+# System files
+$RECYCLE.BIN/
+System Volume Information/
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Server log
+server_log.txt
+
+# Node modules (if any)
+node_modules/
+
+# IDE
+.vscode/
+.idea/
