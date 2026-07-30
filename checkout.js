@@ -67,9 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // -------------------------------------------------------------------------
   const appState = {
     cart: {},
-    currency: 'USD',
-    currencySymbols: { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$' },
-    exchangeRates:   { USD: 1.0, EUR: 0.92, GBP: 0.78, CAD: 1.35, AUD: 1.52 },
     donationType: 'one-time',
     shelterState: '',
     shelterZip: '',
@@ -80,9 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // HELPERS
   // -------------------------------------------------------------------------
   function fmt(amount) {
-    const rate   = appState.exchangeRates[appState.currency] || 1;
-    const symbol = appState.currencySymbols[appState.currency] || '$';
-    return `${symbol}${(amount * rate).toFixed(2)}`;
+    return `$${amount.toFixed(2)}`;
   }
 
   function cartTotals() {
@@ -103,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function persist() {
     localStorage.setItem('care_checkout', JSON.stringify({
       cart:         appState.cart,
-      currency:     appState.currency,
       donationType: appState.donationType,
       shelterState: appState.shelterState,
       shelterZip:   appState.shelterZip
@@ -111,16 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function load() {
-    // Cart saved by supplies.js under 'care_donation_cart'
     const cartRaw = localStorage.getItem('care_donation_cart');
     if (cartRaw) {
       try {
         const d = JSON.parse(cartRaw);
-        appState.cart     = d.items    || {};
-        appState.currency = d.currency || 'USD';
+        appState.cart = d.items || {};
       } catch(e) {}
     }
-    // Checkout state saved by this file under 'care_checkout'
     const coRaw = localStorage.getItem('care_checkout');
     if (coRaw) {
       try {
@@ -128,8 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         appState.donationType = d.donationType || 'one-time';
         appState.shelterState = d.shelterState || '';
         appState.shelterZip   = d.shelterZip   || '';
-        // currency from cart takes priority, but fallback:
-        if (!cartRaw) appState.currency = d.currency || 'USD';
       } catch(e) {}
     }
   }
@@ -160,6 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render review when entering step 4 or 5
     if (step >= 4) renderReview();
+    // Init PayPal buttons when entering step 5
+    if (step === 5) {
+      setTimeout(initCheckoutPayPal, 100);
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (window.lucide) lucide.createIcons();
@@ -364,52 +357,109 @@ document.addEventListener('DOMContentLoaded', () => {
     const rnEl = document.getElementById('recurring-notice');
     if (rnEl) rnEl.style.display = appState.donationType === 'monthly' ? 'flex' : 'none';
 
-    // Payment step mirrors
-    const pTotal = document.getElementById('payment-total');
-    const pToday = document.getElementById('payment-charged-today');
-    const pRecur = document.getElementById('payment-recurring');
-    if (pTotal) pTotal.textContent = fmt(total);
-    if (pToday) pToday.textContent = fmt(total);
-    if (pRecur) pRecur.style.display = appState.donationType === 'monthly' ? 'flex' : 'none';
+    // Step 5 summary mirrors
+    const csFreq = document.getElementById('checkout-summary-freq');
+    const csItems = document.getElementById('checkout-summary-items');
+    const csTotal = document.getElementById('checkout-summary-total');
+    const csRecur = document.getElementById('checkout-summary-recurring');
+    if (csFreq) csFreq.textContent = appState.donationType === 'monthly' ? 'Monthly Giving' : 'One-Time';
+    if (csItems) {
+      const totalItems = Object.keys(appState.cart).reduce((s, id) => s + appState.cart[id], 0);
+      csItems.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+    }
+    if (csTotal) csTotal.textContent = fmt(total);
+    if (csRecur) csRecur.style.display = appState.donationType === 'monthly' ? 'flex' : 'none';
 
     if (window.lucide) lucide.createIcons();
   }
 
   // -------------------------------------------------------------------------
-  // STEP 5 – PAYMENT OPTIONS
+  // STEP 5 – PAYPAL PAYMENT (inline)
   // -------------------------------------------------------------------------
-  function setupPaymentOptions() {
-    const options  = document.querySelectorAll('.payment-option');
-    const cardForm = document.getElementById('card-form');
-    options.forEach(opt => {
-      opt.addEventListener('click', () => {
-        options.forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-        if (cardForm) {
-          cardForm.style.display = opt.getAttribute('data-method') === 'card' ? 'block' : 'none';
-        }
-      });
-    });
-    // Default: select first option
-    if (options.length) options[0].classList.add('selected');
+  const PAYPAL_CLIENT_ID = 'AUmL6AGZU0xLTFKk5PEK2pMef2dFiEZzMeHAIy3Pmf075_ZBP1wKzDxEGFnGx7-xp8dL9nNkHSlG-jHo';
+  let checkoutPaypalRendered = false;
+
+  function initCheckoutPayPal() {
+    if (checkoutPaypalRendered) return;
+    if (!document.getElementById('checkout-paypal-container')) return;
+
+    if (window.checkout_paypal || window.paypal) { renderCheckoutButtons(); return; }
+
+    const script = document.createElement('script');
+    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&enable-funding=card`;
+    script.setAttribute('data-namespace', 'checkout_paypal');
+    script.onload = renderCheckoutButtons;
+    script.onerror = () => {
+      document.getElementById('checkout-paypal-container').innerHTML =
+        '<p style="color:red;text-align:center;">Failed to load PayPal. Please try again later.</p>';
+      document.getElementById('checkout-card-container').innerHTML = '';
+    };
+    document.head.appendChild(script);
   }
 
-  // -------------------------------------------------------------------------
-  // PROCESS PAYMENT → payment.html
-  // -------------------------------------------------------------------------
-  window.processPayment = function() {
+  function renderCheckoutButtons() {
+    const sdk = window.checkout_paypal || window.paypal;
+    if (!sdk || checkoutPaypalRendered) return;
+
     const { total } = cartTotals();
+    const isMonthly = appState.donationType === 'monthly';
+    const amt = parseFloat(total.toFixed(2));
 
-    // Save donation data so payment.html can display it
-    localStorage.setItem('care_direct_donation', JSON.stringify({
-      amount:   parseFloat(total.toFixed(2)),
-      freq:     appState.donationType,
-      currency: appState.currency || 'USD'
-    }));
+    const btnOpts = isMonthly ? {
+      createSubscription: function() {
+        return fetch('/api/paypal/create-subscription', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: amt, currency: 'USD' })
+        }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d.id; });
+      },
+      onApprove: handleCheckoutSuccess,
+      onError: function(err) { alert('Payment failed: ' + (err.message || 'Please try again.')); }
+    } : {
+      createOrder: function() {
+        return fetch('/api/paypal/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: amt, currency: 'USD' })
+        }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d.id; });
+      },
+      onApprove: function(data) {
+        return fetch('/api/paypal/capture-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId: data.orderID })
+        }).then(r => r.json()).then(d => {
+          if (d.error) throw new Error(d.error);
+          handleCheckoutSuccess();
+        });
+      },
+      onError: function(err) { alert('Payment failed: ' + (err.message || 'Please try again.')); }
+    };
 
-    // Navigate to the payment page
-    window.location.href = 'payment.html';
-  };
+    sdk.Buttons({ ...btnOpts, fundingSource: sdk.FUNDING.PAYPAL }).render('#checkout-paypal-container');
+    sdk.Buttons({ ...btnOpts, fundingSource: sdk.FUNDING.CARD }).render('#checkout-card-container');
+    checkoutPaypalRendered = true;
+  }
+
+  function handleCheckoutSuccess() {
+    localStorage.removeItem('care_donation_cart');
+    localStorage.removeItem('care_checkout');
+
+    const { total } = cartTotals();
+    document.getElementById('confirmation-total').textContent = fmt(total);
+    document.getElementById('confirmation-donation-type').textContent =
+      appState.donationType === 'monthly' ? 'Monthly Subscription' : 'One-Time Donation';
+    document.getElementById('confirmation-order-id').textContent =
+      'CARE-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    const locEl = document.getElementById('confirmation-location');
+    if (locEl) {
+      locEl.textContent = appState.shelterState ? `${appState.shelterState} (${appState.shelterZip})` : 'Shelter Location';
+    }
+    const recEl = document.getElementById('confirmation-recurring');
+    if (recEl) recEl.style.display = appState.donationType === 'monthly' ? 'flex' : 'none';
+
+    goToStep(6);
+  }
 
   // -------------------------------------------------------------------------
   // NAVBAR DONATE BUTTON
@@ -426,6 +476,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   restoreDonationType();
   setupLocationForm();
-  setupPaymentOptions();
 
 });

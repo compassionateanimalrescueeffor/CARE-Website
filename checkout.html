@@ -17,6 +17,73 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <style>
+    .payment-form-card h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-or-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .payment-or-divider::before,
+    .payment-or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    #checkout-paypal-container,
+    #checkout-card-container {
+      min-height: 45px;
+    }
+
+    .security-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin: 1.5rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .security-strip i { color: var(--primary); flex-shrink: 0; }
+
+    .terms-tiny {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .terms-tiny a { color: var(--primary); font-weight: 600; }
+
+    .summary-row.recurring-info {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
 <body class="checkout-page-body">
 
@@ -355,112 +422,50 @@
       <div class="checkout-step" id="step-5" data-step="5">
         <div class="checkout-header">
           <h1 class="checkout-title">Complete Your Donation</h1>
-          <p class="checkout-subtitle">Choose your preferred payment method</p>
+          <p class="checkout-subtitle">Choose your payment method below.</p>
         </div>
 
         <div class="checkout-grid">
           <div class="payment-section">
-            <div class="payment-methods">
-              <h3>Payment Method</h3>
-              <div class="payment-options" id="payment-options">
-                <label class="payment-option" data-method="paypal">
-                  <input type="radio" name="payment-method" value="paypal" checked>
-                  <div class="payment-option-content">
-                    <i data-lucide="credit-card" class="payment-icon"></i>
-                    <div>
-                      <strong>PayPal</strong>
-                      <span>Pay securely with your PayPal account</span>
-                    </div>
-                  </div>
-                  <i data-lucide="check" class="payment-check"></i>
-                </label>
+            <div class="payment-form-card">
+              <h3>Secure Payment</h3>
 
-                <label class="payment-option" data-method="card">
-                  <input type="radio" name="payment-method" value="card">
-                  <div class="payment-option-content">
-                    <i data-lucide="credit-card" class="payment-icon"></i>
-                    <div>
-                      <strong>Credit / Debit Card</strong>
-                      <span>Visa, Mastercard, American Express, Discover</span>
-                    </div>
-                  </div>
-                  <i data-lucide="check" class="payment-check"></i>
-                </label>
+              <div id="checkout-paypal-container"></div>
 
-                <label class="payment-option" data-method="apple-pay">
-                  <input type="radio" name="payment-method" value="apple-pay">
-                  <div class="payment-option-content">
-                    <i data-lucide="apple" class="payment-icon"></i>
-                    <div>
-                      <strong>Apple Pay</strong>
-                      <span>Quick checkout with Face ID / Touch ID</span>
-                    </div>
-                  </div>
-                  <i data-lucide="check" class="payment-check"></i>
-                </label>
+              <div class="payment-or-divider"><span>OR</span></div>
 
-                <label class="payment-option" data-method="google-pay">
-                  <input type="radio" name="payment-method" value="google-pay">
-                  <div class="payment-option-content">
-                    <i data-lucide="smartphone" class="payment-icon"></i>
-                    <div>
-                      <strong>Google Pay</strong>
-                      <span>Fast, simple, and secure</span>
-                    </div>
-                  </div>
-                  <i data-lucide="check" class="payment-check"></i>
-                </label>
+              <div id="checkout-card-container"></div>
+
+              <div class="security-strip">
+                <i data-lucide="shield-check"></i>
+                <span>256-bit SSL encryption. Your payment details are never stored on our servers.</span>
               </div>
 
-              <!-- Card Form (shown when card selected) -->
-              <div class="card-form" id="card-form" style="display: none;">
-                <div class="form-group">
-                  <label class="form-label">Card Number</label>
-                  <input type="text" class="form-input" placeholder="4242 4242 4242 4242" maxlength="19">
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">Expiry</label>
-                    <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">CVC</label>
-                    <input type="text" class="form-input" placeholder="123" maxlength="4">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Name on Card</label>
-                  <input type="text" class="form-input" placeholder="John Doe">
-                </div>
-              </div>
-            </div>
-
-            <div class="security-assurance">
-              <i data-lucide="shield"></i>
-              <span>Secured by 256-bit SSL encryption. Your payment information is never stored on our servers.</span>
+              <p class="terms-tiny">
+                By donating, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                Donations are processed securely by PayPal.
+              </p>
             </div>
           </div>
 
           <div class="payment-summary">
             <h3>Donation Summary</h3>
             <div class="summary-row">
-              <span>Order Total</span>
-              <span id="payment-total">$0.00</span>
+              <span>Donation Type</span>
+              <span id="checkout-summary-freq">One-Time</span>
             </div>
-            <div class="summary-row recurring-info" id="payment-recurring" style="display: none;">
+            <div class="summary-row">
+              <span>Items</span>
+              <span id="checkout-summary-items">0 items</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="checkout-summary-total">$0.00</span>
+            </div>
+            <div class="summary-row recurring-info" id="checkout-summary-recurring" style="display: none;">
               <span><i data-lucide="repeat"></i> Monthly recurring</span>
               <span></span>
             </div>
-            <div class="summary-row total">
-              <span>Charged Today</span>
-              <span id="payment-charged-today">$0.00</span>
-            </div>
-
-            <button class="btn btn-primary btn-block btn-large" id="pay-button" onclick="processPayment()">
-              <i data-lucide="heart"></i> Donate Now
-            </button>
-
-            <p class="terms-note">By donating, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
           </div>
         </div>
 

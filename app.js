@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     raisedUSD: 0,
     goalUSD: 3500,
     supporterCount: 0,
-    currency: 'USD',
-    currencySymbols: { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$' },
-    exchangeRates: { USD: 1.0, EUR: 0.92, GBP: 0.78, CAD: 1.35, AUD: 1.52 },
     frequency: 'one-time',
     selectedAmount: 50,
     calculatorAmount: 50,
@@ -94,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global Redirect / Donate Function
   window.redirectToPayment = function(amount, freq) {
     const targetAmount = parseFloat(amount) || state.selectedAmount || 50;
-    const targetFreq   = freq || state.frequency || 'one-time';
+    const targetFreq   = freq || 'one-time';
 
     if (!targetAmount || targetAmount <= 0) {
       alert('Please enter a valid donation amount.');
@@ -104,11 +101,68 @@ document.addEventListener('DOMContentLoaded', () => {
     // Persist to localStorage so payment.html can read it
     localStorage.setItem('care_direct_donation', JSON.stringify({
       amount:   targetAmount,
-      freq:     targetFreq,
-      currency: state.currency || 'USD'
+      freq:     targetFreq
     }));
 
     window.location.href = 'payment.html';
+  };
+
+  // Custom donation modal for independent Donate Now buttons
+  window.donateCustom = function() {
+    const overlay = document.getElementById('donation-modal');
+    const input = document.getElementById('modal-amount-input');
+    const presets = overlay.querySelectorAll('.preset-btn');
+    const donateBtn = document.getElementById('modal-donate-btn');
+    const closeBtn = document.getElementById('modal-close');
+    const cancelBtn = document.getElementById('modal-cancel-btn');
+
+    let selectedAmount = 50;
+    input.value = '';
+
+    function setPreset(amt) {
+      selectedAmount = amt;
+      presets.forEach(p => p.classList.toggle('active', parseFloat(p.getAttribute('data-amt')) === amt));
+      input.value = '';
+    }
+
+    presets.forEach(p => {
+      p.onclick = () => setPreset(parseFloat(p.getAttribute('data-amt')));
+    });
+
+    input.oninput = function() {
+      const val = parseFloat(this.value);
+      if (val > 0) {
+        selectedAmount = val;
+        presets.forEach(p => p.classList.remove('active'));
+      }
+    };
+
+    input.onkeydown = function(e) {
+      if (e.key === 'Enter') submitAmount();
+    };
+
+    function submitAmount() {
+      if (!selectedAmount || selectedAmount <= 0) {
+        alert('Please enter a valid donation amount.');
+        return;
+      }
+      close();
+      redirectToPayment(selectedAmount);
+    }
+
+    function close() {
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    donateBtn.onclick = submitAmount;
+    closeBtn.onclick = close;
+    cancelBtn.onclick = close;
+    overlay.onclick = function(e) { if (e.target === overlay) close(); };
+
+    setPreset(50);
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
   };
 
   // Highlight the selected impact card and sync custom input
@@ -128,26 +182,23 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.impact-card[data-usd]').forEach(card => {
     const usdAmount = parseFloat(card.getAttribute('data-usd'));
     card.addEventListener('click', (e) => {
-      // Only select if not clicking the donate button itself (that has its own onclick)
       if (!e.target.closest('button')) selectImpactCard(usdAmount);
     });
     const btn = card.querySelector('button');
     if (btn) {
-      const orig = btn.getAttribute('onclick');
       btn.onclick = function() {
         selectImpactCard(usdAmount);
-        redirectToPayment(usdAmount);
+        redirectToPayment(usdAmount, state.frequency);
       };
     }
   });
 
-  // Wire custom amount input — deselect preset cards when typing
+  // Wire custom amount input
   const customInput = document.getElementById('custom-amount-input');
   const customDonateBtn = document.querySelector('.custom-impact-card button');
   if (customInput) {
     customInput.addEventListener('input', () => {
       const val = parseFloat(customInput.value);
-      // Deselect all preset cards
       document.querySelectorAll('.impact-card[data-usd]').forEach(c => c.classList.remove('selected-card'));
       state.selectedAmount = val > 0 ? val : null;
     });
@@ -159,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Please enter a valid custom donation amount (minimum $1).');
         return;
       }
-      redirectToPayment(val);
+      redirectToPayment(val, state.frequency);
     };
   }
 
@@ -208,20 +259,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const goalDisplay = document.getElementById('goal-amount');
   const percentDisplay = document.getElementById('percent-complete');
   const supportersDisplay = document.getElementById('supporters-count');
-  const currencySelect = document.getElementById('currency-select');
   const freqBtns = document.querySelectorAll('.freq-btn');
 
   function updateProgressUI() {
-    const rate = state.exchangeRates[state.currency];
-    const symbol = state.currencySymbols[state.currency];
-    
-    const raisedConverted = Math.round(state.raisedUSD * rate);
-    const goalConverted = Math.round(state.goalUSD * rate);
     const percentage = state.goalUSD > 0 ? Math.min(100, Math.round((state.raisedUSD / state.goalUSD) * 100)) : 0;
 
-    if (raisedDisplay) raisedDisplay.textContent = `${symbol}${raisedConverted.toLocaleString()}`;
-    if (heroRaisedDisplay) heroRaisedDisplay.textContent = `${symbol}${raisedConverted.toLocaleString()}`;
-    if (goalDisplay) goalDisplay.textContent = `${symbol}${goalConverted.toLocaleString()}`;
+    if (raisedDisplay) raisedDisplay.textContent = `$${state.raisedUSD.toLocaleString()}`;
+    if (heroRaisedDisplay) heroRaisedDisplay.textContent = `$${state.raisedUSD.toLocaleString()}`;
+    if (goalDisplay) goalDisplay.textContent = `$${state.goalUSD.toLocaleString()}`;
     if (percentDisplay) percentDisplay.textContent = `${percentage}%`;
     if (supportersDisplay) {
       supportersDisplay.textContent = state.supporterCount === 0 ? '0 (Be the first!)' : state.supporterCount.toLocaleString();
@@ -230,33 +275,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const heroFloatingGoal = document.getElementById('hero-floating-goal');
     if (heroFloatingGoal) {
-      heroFloatingGoal.textContent = `${percentage}% of ${symbol}${goalConverted.toLocaleString()}`;
+      heroFloatingGoal.textContent = `${percentage}% of $${state.goalUSD.toLocaleString()}`;
     }
   }
 
-  if (currencySelect) {
-    currencySelect.addEventListener('change', (e) => {
-      state.currency = e.target.value;
-      updateProgressUI();
-      updateImpactCardsCurrency();
-    });
-  }
-
   function updateImpactCardsCurrency() {
-    const rate = state.exchangeRates[state.currency];
-    const symbol = state.currencySymbols[state.currency];
-    
     document.querySelectorAll('.impact-card[data-usd]').forEach(card => {
       const usdAmount = parseFloat(card.getAttribute('data-usd'));
-      const converted = Math.round(usdAmount * rate);
       const amountEl = card.querySelector('.impact-amount');
       if (amountEl) {
-        amountEl.innerHTML = `${symbol}${converted}<span>/${state.frequency === 'monthly' ? 'mo' : ''}</span>`;
+        amountEl.innerHTML = `$${usdAmount}<span>/${state.frequency === 'monthly' ? 'mo' : ''}</span>`;
       }
     });
-
-    const symbolPrefix = document.querySelector('.currency-symbol');
-    if (symbolPrefix) symbolPrefix.textContent = symbol;
   }
 
   freqBtns.forEach(btn => {
@@ -289,10 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (calcDesc) calcDesc.textContent = impact.desc;
         if (calcDetail) calcDetail.textContent = impact.detail;
         if (calcDonateBtn) {
-          const symbol = state.currencySymbols[state.currency] || '$';
-          const rate = state.exchangeRates[state.currency] || 1;
-          const converted = Math.round(amount * rate);
-          calcDonateBtn.textContent = `Donate ${symbol}${converted} Now`;
+          calcDonateBtn.textContent = `Donate $${amount} Now`;
           calcDonateBtn.setAttribute('onclick', `redirectToPayment(${amount})`);
         }
       }
@@ -438,18 +465,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 7000);
 
-  // --- 9. NEWSLETTER FORM ---
-  const newsletterForm = document.getElementById('newsletter-form');
-  const newsletterSuccess = document.getElementById('newsletter-success');
+  // --- 9. ADOPTION ENQUIRY ---
+  const showFormBtn = document.getElementById('show-adoption-form');
+  const adoptionForm = document.getElementById('adoption-form');
+  const adoptionSuccess = document.getElementById('adoption-success');
 
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+  if (showFormBtn && adoptionForm) {
+    showFormBtn.addEventListener('click', () => {
+      showFormBtn.style.display = 'none';
+      adoptionForm.style.display = 'block';
+      adoptionForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  if (adoptionForm) {
+    adoptionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const emailInput = document.getElementById('newsletter-email');
-      if (emailInput && emailInput.value) {
-        newsletterForm.style.display = 'none';
-        if (newsletterSuccess) newsletterSuccess.style.display = 'block';
+      const name = document.getElementById('adoption-name').value.trim();
+      const email = document.getElementById('adoption-email').value.trim();
+      const message = document.getElementById('adoption-message').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill out all fields.');
+        return;
       }
+
+      try {
+        const resp = await fetch('/api/adoption-enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+        if (!resp.ok) throw new Error('Server error');
+      } catch (err) {
+        alert('Failed to submit enquiry. Please try again or email us directly at compassionateanimalrescueeffor@gmail.com');
+        return;
+      }
+
+      adoptionForm.style.display = 'none';
+      if (adoptionSuccess) adoptionSuccess.style.display = 'block';
     });
   }
 
@@ -465,11 +519,9 @@ document.addEventListener('DOMContentLoaded', () => {
     state.activeCategory = categoryId;
 
     const filtered = catalogProducts.filter(p => p.catId === categoryId);
-    const rate = state.exchangeRates[state.currency] || 1;
-    const symbol = state.currencySymbols[state.currency] || '$';
 
     catalogGrid.innerHTML = filtered.map(p => {
-      const priceConverted = Math.round(p.price * rate);
+      const priceConverted = p.price;
       const qty = state.donationBag[p.id] || 0;
       const priorityClass = p.priority === 'Critical' ? 'priority-critical' : p.priority === 'High' ? 'priority-high' : 'priority-standard';
       const animalIcon = p.animal === 'cat' ? '🐱 Cat Supply' : p.animal === 'dog' ? '🐶 Dog Supply' : '🐾 Shared Essential';
@@ -484,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3 class="product-name">${p.name}</h3>
             <p class="product-desc">${p.desc}</p>
             <div class="product-meta">
-              <span class="product-price">${symbol}${priceConverted}</span>
+              <span class="product-price">$${priceConverted}</span>
               <span class="product-needed">Needed: <strong>${p.needed} units</strong></span>
             </div>
           </div>
@@ -529,6 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateBagBar() {
     let totalItems = 0;
     let totalPriceUSD = 0;
+    // eslint-disable-next-line no-unused-vars
 
     Object.keys(state.donationBag).forEach(pId => {
       const q = state.donationBag[pId];
@@ -539,15 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    const rate = state.exchangeRates[state.currency] || 1;
-    const symbol = state.currencySymbols[state.currency] || '$';
-    const totalConverted = Math.round(totalPriceUSD * rate);
-
     if (bagBar) {
       if (totalItems > 0) {
         bagBar.classList.add('visible');
         if (bagCountEl) bagCountEl.textContent = `${totalItems} Item${totalItems > 1 ? 's' : ''} Selected`;
-        if (bagTotalEl) bagTotalEl.textContent = `${symbol}${totalConverted}`;
+        if (bagTotalEl) bagTotalEl.textContent = `$${totalPriceUSD}`;
       } else {
         bagBar.classList.remove('visible');
       }

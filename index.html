@@ -35,14 +35,13 @@
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#campaign" class="nav-link">Campaign</a></li>
         <li><a href="supplies.html" class="nav-link">Supplies Needed</a></li>
-        <li><a href="#stories" class="nav-link">Rescue Stories</a></li>
         <li><a href="#gallery" class="nav-link">Gallery</a></li>
         <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
       </ul>
 
       <div class="nav-actions">
-        <button class="btn btn-primary" onclick="redirectToPayment(50)">
+        <button class="btn btn-primary" onclick="donateCustom()">
           <i data-lucide="heart"></i> Donate Now
         </button>
         <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
@@ -86,7 +85,7 @@
         </div>
 
         <div class="hero-ctas">
-          <button class="btn btn-primary btn-large" onclick="redirectToPayment(50)">
+          <button class="btn btn-primary btn-large" onclick="donateCustom()">
             <i data-lucide="heart"></i> Donate Now
           </button>
           <a href="#campaign" class="btn btn-secondary btn-large">
@@ -280,7 +279,7 @@
         </div>
 
         <div class="stat-card">
-          <span class="stat-icon">🍖</span>
+          <span class="stat-icon">🥣</span>
           <div class="stat-number" data-target="18500" data-suffix="+">0+</div>
           <div class="stat-label">Meals Provided</div>
         </div>
@@ -320,13 +319,6 @@
             <button class="freq-btn" data-freq="monthly">Monthly Giving</button>
           </div>
 
-          <select class="currency-select" id="currency-select" aria-label="Select currency">
-            <option value="USD">$ USD (US Dollar)</option>
-            <option value="EUR">€ EUR (Euro)</option>
-            <option value="GBP">£ GBP (British Pound)</option>
-            <option value="CAD">CA$ CAD (Canadian Dollar)</option>
-            <option value="AUD">A$ AUD (Australian Dollar)</option>
-          </select>
         </div>
       </div>
 
@@ -417,95 +409,8 @@
   </section>
 
   <!-- ==========================================================================
-     9. RESCUE STORIES (NEW)
+     9. BEAUTIFUL ANIMAL GALLERY (NEW)
      ========================================================================== -->
-  <section class="stories-section" id="stories">
-    <div class="container">
-      <div class="text-center animate-on-scroll">
-        <span class="section-tag">
-          <i data-lucide="book-open"></i> Inspiring Journey
-        </span>
-        <h2 class="section-title">Real Stories. Real Lives Changed.</h2>
-        <p class="section-subtitle">
-          Meet the animals whose lives were saved thanks to compassionate supporters like you.
-        </p>
-      </div>
-
-      <div class="stories-grid animate-on-scroll">
-        <!-- Story 1: Luna -->
-        <div class="story-card">
-          <div class="story-image-wrap">
-            <img src="assets/rescue_luna.jpg" alt="Rescued dog Luna sitting happily in a sunlit field">
-            <span class="story-badge-status">Ready for Adoption</span>
-          </div>
-          <div class="story-content">
-            <div class="story-header">
-              <h3 class="story-name">Luna</h3>
-              <span class="story-date">Rescued May 2026</span>
-            </div>
-            <p class="story-text">
-              Luna was found malnourished on a roadside. Thanks to rapid triage, nutritious meals, and medical care, she has made a full recovery.
-            </p>
-            <div class="story-progress-box">
-              <div><span>Before:</span> Severe dehydration & weight loss</div>
-              <div><span>Recovery:</span> 100% restored health & energy</div>
-            </div>
-            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
-              <i data-lucide="heart"></i> Support Rescues Like Luna
-            </button>
-          </div>
-        </div>
-
-        <!-- Story 2: Milo -->
-        <div class="story-card">
-          <div class="story-image-wrap">
-            <img src="assets/rescue_milo.jpg" alt="Rescued cat Milo resting comfortably on a blanket">
-            <span class="story-badge-status">Fostered Safely</span>
-          </div>
-          <div class="story-content">
-            <div class="story-header">
-              <h3 class="story-name">Milo</h3>
-              <span class="story-date">Rescued June 2026</span>
-            </div>
-            <p class="story-text">
-              Rescued from an abandoned building during heavy rain. Milo received emergency orthopedic care and is now happily recovering.
-            </p>
-            <div class="story-progress-box">
-              <div><span>Before:</span> Fractured leg & respiratory distress</div>
-              <div><span>Recovery:</span> Fully healed & vaccinated</div>
-            </div>
-            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
-              <i data-lucide="heart"></i> Support Rescues Like Milo
-            </button>
-          </div>
-        </div>
-
-        <!-- Story 3: Barnaby -->
-        <div class="story-card">
-          <div class="story-image-wrap">
-            <img src="assets/rescue_barnaby.jpg" alt="Rescued beagle puppy Barnaby cradled in loving hands">
-            <span class="story-badge-status">In Sanctuary Care</span>
-          </div>
-          <div class="story-content">
-            <div class="story-header">
-              <h3 class="story-name">Barnaby</h3>
-              <span class="story-date">Rescued July 2026</span>
-            </div>
-            <p class="story-text">
-              Found alone at just 8 weeks old. Barnaby was brought to safety, given urgent puppy vaccinations, and receives 24/7 loving care.
-            </p>
-            <div class="story-progress-box">
-              <div><span>Before:</span> High-risk infection & parasite exposure</div>
-              <div><span>Recovery:</span> Clean bill of health & playful spirit</div>
-            </div>
-            <button class="btn btn-secondary" onclick="redirectToPayment(50)" style="margin-top: auto;">
-              <i data-lucide="heart"></i> Support Rescues Like Barnaby
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ==========================================================================
      10. BEAUTIFUL ANIMAL GALLERY (NEW)
@@ -851,8 +756,8 @@
       </div>
 
       <div class="text-center animate-on-scroll">
-        <button class="btn btn-primary btn-large" onclick="redirectToPayment(50)">
-          <i data-lucide="user-plus"></i> Join as a Volunteer / Foster
+        <button class="btn btn-primary btn-large" onclick="donateCustom()">
+          <i data-lucide="heart"></i> Donate Now
         </button>
       </div>
     </div>
@@ -861,26 +766,34 @@
   <!-- ==========================================================================
      16. NEWSLETTER SUBSCRIPTION (NEW)
      ========================================================================== -->
-  <section class="newsletter-section" id="newsletter">
+  <section class="newsletter-section" id="adoption">
     <div class="container">
       <div class="newsletter-card animate-on-scroll scale-up">
-        <h2 class="newsletter-title">Stay Connected with CARE</h2>
+        <h2 class="newsletter-title">🐾 Ready to Welcome a New Best Friend?</h2>
         <p class="newsletter-subtitle">
-          Receive regular, transparent milestone reports, rescue stories, and shelter build progress photos.
+          Adopting a rescue pet gives them a second chance while making room for another animal in need. If you're interested in adopting, send us an enquiry and we'll help you find the right companion.
         </p>
 
-        <form class="newsletter-form" id="newsletter-form">
-          <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+        <div class="adoption-actions">
+          <button class="btn btn-primary btn-large" id="show-adoption-form">
+            <i data-lucide="heart"></i> Adoption Enquiry
+          </button>
+        </div>
+
+        <form class="adoption-form" id="adoption-form" style="display:none;">
+          <div class="adoption-form-fields">
+            <input type="text" class="newsletter-input" id="adoption-name" placeholder="Full Name" required aria-label="Full Name">
+            <input type="email" class="newsletter-input" id="adoption-email" placeholder="Email Address" required aria-label="Email Address">
+            <textarea class="newsletter-input adoption-message" id="adoption-message" placeholder="Tell us about yourself and the kind of pet you're looking for..." rows="4" required></textarea>
+          </div>
           <button type="submit" class="btn btn-primary btn-large">
-            <i data-lucide="send"></i> Subscribe
+            <i data-lucide="send"></i> Submit Enquiry
           </button>
         </form>
 
-        <div class="newsletter-success" id="newsletter-success">
-          ✓ Thank you for subscribing! We'll keep you updated on Phase 1 progress.
+        <div class="newsletter-success" id="adoption-success" style="display:none;">
+          ✓ Thank you for your enquiry! We've received your message and will get back to you soon at the email you provided.
         </div>
-
-        <p class="newsletter-privacy">🔒 We respect your privacy. Unsubscribe anytime with 1-click.</p>
       </div>
     </div>
   </section>
@@ -927,7 +840,7 @@
             <div class="faq-toggle-icon"><i data-lucide="chevron-down"></i></div>
           </button>
           <div class="faq-answer">
-            Campaign progress updates, equipment receipt breakdowns, and photos of acquired supplies will be published regularly directly on this campaign page and shared with supporters as milestones are reached.
+            We regularly share updates, rescue stories, campaign progress, and highlights from our ongoing efforts across our social media channels. Follow us to stay informed about our latest activities, milestones, and the impact of your support.
           </div>
         </div>
 
@@ -954,7 +867,7 @@
         <p class="cta-text">
           Every rescued animal deserves food, shelter, medical care, and love. Help us take the first step toward creating a safe place where lives can be saved.
         </p>
-        <button class="btn btn-white btn-large" onclick="redirectToPayment(50)">
+        <button class="btn btn-white btn-large" onclick="donateCustom()">
           <i data-lucide="heart"></i> Donate Now
         </button>
       </div>
@@ -991,7 +904,6 @@
             <li><a href="#about">About</a></li>
             <li><a href="#campaign">Campaign</a></li>
             <li><a href="#supplies">Supplies Needed</a></li>
-            <li><a href="#stories">Rescue Stories</a></li>
             <li><a href="#roadmap">Roadmap</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
@@ -1076,6 +988,32 @@
 
       <div id="retailer-results" style="display: none;">
         <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation Amount Modal -->
+  <div class="donation-modal-overlay" id="donation-modal">
+    <div class="donation-modal">
+      <button class="modal-x" id="modal-close">&times;</button>
+      <h3 class="modal-heading">Enter Your Donation Amount</h3>
+      <p class="modal-sub">Your contribution directly supports rescued animals.</p>
+
+      <div class="modal-presets">
+        <button class="preset-btn" data-amt="10">$10</button>
+        <button class="preset-btn" data-amt="25">$25</button>
+        <button class="preset-btn active" data-amt="50">$50</button>
+        <button class="preset-btn" data-amt="100">$100</button>
+      </div>
+
+      <div class="modal-custom-row">
+        <span class="modal-dollar">$</span>
+        <input type="number" class="modal-input" id="modal-amount-input" placeholder="Custom amount" min="1" step="1">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary btn-large" id="modal-donate-btn">Donate Now</button>
+        <button class="btn btn-ghost" id="modal-cancel-btn">Cancel</button>
       </div>
     </div>
   </div>
