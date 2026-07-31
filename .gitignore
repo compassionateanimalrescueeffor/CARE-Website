@@ -14,3 +14,13 @@ node_modules/
 # IDE
 .vscode/
 .idea/
+
+worker.js
+src/
+site/
+vercel_deploy/
+.env
+.vercel/
+.vercelignore
+live_payment.html
+wrangler.toml

@@ -465,7 +465,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 7000);
 
-  // --- 9. ADOPTION ENQUIRY ---
+  // --- 9. FOSTER APPLICATION ---
+  const showFosterBtn = document.getElementById('show-foster-form');
+  const fosterForm = document.getElementById('foster-form');
+  const fosterSuccess = document.getElementById('foster-success');
+
+  if (showFosterBtn && fosterForm) {
+    showFosterBtn.addEventListener('click', () => {
+      showFosterBtn.style.display = 'none';
+      fosterForm.style.display = 'block';
+      fosterForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  if (fosterForm) {
+    fosterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('foster-name').value.trim();
+      const email = document.getElementById('foster-email').value.trim();
+      const message = document.getElementById('foster-message').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      try {
+        const resp = await fetch('/api/foster-enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+        if (!resp.ok) throw new Error('Server error');
+      } catch (err) {
+        alert('Failed to submit application. Please try again or email us directly at compassionateanimalrescueeffor@gmail.com');
+        return;
+      }
+
+      fosterForm.style.display = 'none';
+      if (fosterSuccess) fosterSuccess.style.display = 'block';
+    });
+  }
+
+  // --- 9b. ADOPTION ENQUIRY ---
   const showFormBtn = document.getElementById('show-adoption-form');
   const adoptionForm = document.getElementById('adoption-form');
   const adoptionSuccess = document.getElementById('adoption-success');
