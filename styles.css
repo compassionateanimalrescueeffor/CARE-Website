@@ -3092,6 +3092,21 @@ button, input, select {
   font-family: inherit;
 }
 
+.foster-form .newsletter-input {
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+}
+
+.foster-form .newsletter-input::placeholder {
+  color: #94A3B8;
+}
+
+.foster-form .newsletter-input:focus {
+  border-color: var(--primary);
+  background: #FFFFFF;
+}
+
 @media (max-width: 768px) {
   .allocation-grid {
     grid-template-columns: 1fr;
