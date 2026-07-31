@@ -58,7 +58,7 @@
     <div class="container hero-grid">
       <div class="hero-content animate-on-scroll fade-left">
         <div class="hero-badge">
-          <span class="pulse-dot"></span> Phase 1 Official Fundraiser
+          <span class="pulse-dot"></span> <span id="hero-phase-label">Phase 1 Official Fundraiser</span>
         </div>
         
         <h1 class="hero-headline">
@@ -71,11 +71,11 @@
 
         <div class="hero-stats-row">
           <div class="hero-stat-item">
-            <h4 id="hero-raised-display">$0</h4>
-            <p>Raised of $3,500 Goal</p>
+            <h4 id="hero-raised-display">$750</h4>
+            <p id="hero-goal-label">Raised of $3,500 Goal</p>
           </div>
           <div class="hero-stat-item">
-            <h4>0</h4>
+            <h4 id="hero-supporters-count">9</h4>
             <p>Supporters So Far</p>
           </div>
           <div class="hero-stat-item">
@@ -100,10 +100,10 @@
         <div class="hero-floating-card glass-panel">
           <div class="floating-card-header">
             <span class="floating-card-title">Phase 1 Campaign Status</span>
-            <span class="floating-card-goal" id="hero-floating-goal">0% of $3,500</span>
+            <span class="floating-card-goal" id="hero-floating-goal">21% of $3,500</span>
           </div>
           <div class="progress-bar-container" style="height: 10px; margin-bottom: 0;">
-            <div class="progress-bar-fill" style="width: 0%;"></div>
+            <div class="progress-bar-fill" style="width: 21%;"></div>
           </div>
         </div>
       </div>
@@ -118,20 +118,20 @@
       <div class="progress-card animate-on-scroll scale-up">
         <div class="progress-header">
           <div>
-            <span class="phase-pill">Phase 1 of 3</span>
+            <span class="phase-pill" id="phase-pill">Phase 1 of 3</span>
             <h2 class="progress-raised">
-              <span id="raised-amount">$0</span>
+              <span id="raised-amount">$750</span>
               <span>raised of <strong id="goal-amount">$3,500</strong> goal</span>
             </h2>
           </div>
           <div class="progress-target">
-            <div class="progress-target-val" id="percent-complete">0%</div>
+            <div class="progress-target-val" id="percent-complete">21%</div>
             <div class="progress-target-lbl">Completed</div>
           </div>
         </div>
 
         <div class="progress-bar-container">
-          <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+          <div class="progress-bar-fill" id="progress-bar-fill" style="width: 21%;"></div>
         </div>
 
         <div class="progress-metrics">
@@ -140,7 +140,7 @@
               <i data-lucide="users"></i>
             </div>
             <div class="metric-info">
-              <h5 id="supporters-count">0 (Be the first!)</h5>
+              <h5 id="supporters-count">9</h5>
               <p>Campaign Donors</p>
             </div>
           </div>
@@ -400,7 +400,7 @@
           <h3 class="calc-impact-title" id="calc-impact-title">$50 Contribution</h3>
           <p class="calc-impact-desc" id="calc-impact-desc">Provides emergency treatment.</p>
           <p class="calc-impact-detail" id="calc-impact-detail">Funds immediate veterinary diagnostic checks, wound dressing, and antibiotics.</p>
-          <button class="btn btn-primary btn-large" id="calc-donate-btn" onclick="redirectToPayment(50)">
+          <button class="btn btn-primary btn-large" id="calc-donate-btn" onclick="donateAmount(50)">
             <i data-lucide="heart"></i> Donate $50 Now
           </button>
         </div>
@@ -541,7 +541,7 @@
       </div>
 
       <div class="roadmap-timeline animate-on-scroll">
-        <div class="roadmap-card active">
+        <div class="roadmap-card active" data-phase="1">
           <span class="roadmap-badge current">Phase 1 • Active Now</span>
           <h3 class="roadmap-title">Launch & Essential Equipment</h3>
           <div class="roadmap-goal">Goal $3,500</div>
@@ -554,7 +554,7 @@
           <div class="roadmap-connector"><i data-lucide="chevron-right"></i></div>
         </div>
 
-        <div class="roadmap-card">
+        <div class="roadmap-card" data-phase="2">
           <span class="roadmap-badge upcoming">Phase 2 • Upcoming</span>
           <h3 class="roadmap-title">Facility Preparation</h3>
           <div class="roadmap-goal">Goal $25,000</div>
@@ -567,7 +567,7 @@
           <div class="roadmap-connector"><i data-lucide="chevron-right"></i></div>
         </div>
 
-        <div class="roadmap-card">
+        <div class="roadmap-card" data-phase="3">
           <span class="roadmap-badge upcoming">Phase 3 • Future Goal</span>
           <h3 class="roadmap-title">Shelter Operations</h3>
           <div class="roadmap-goal">Goal $100,000+</div>

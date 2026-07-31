@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Campaign State
   const state = {
-    raisedUSD: 0,
+    raisedUSD: 750,
     goalUSD: 3500,
-    supporterCount: 0,
+    supporterCount: 9,
+    phase: 1,
+    phaseGoal: 3500,
     frequency: 'one-time',
     selectedAmount: 50,
     calculatorAmount: 50,
@@ -107,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'payment.html';
   };
 
+  // Global helper for inline handlers that need the current frequency
+  window.donateAmount = function(amount) {
+    redirectToPayment(amount, state.frequency);
+  };
+
   // Custom donation modal for independent Donate Now buttons
   window.donateCustom = function() {
     const overlay = document.getElementById('donation-modal');
@@ -147,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       close();
-      redirectToPayment(selectedAmount);
+      redirectToPayment(selectedAmount, state.frequency);
     }
 
     function close() {
@@ -271,12 +278,72 @@ document.addEventListener('DOMContentLoaded', () => {
     if (supportersDisplay) {
       supportersDisplay.textContent = state.supporterCount === 0 ? '0 (Be the first!)' : state.supporterCount.toLocaleString();
     }
+    const heroSupporters = document.getElementById('hero-supporters-count');
+    if (heroSupporters) heroSupporters.textContent = state.supporterCount.toLocaleString();
     if (progressBarFill) progressBarFill.style.width = `${percentage}%`;
 
     const heroFloatingGoal = document.getElementById('hero-floating-goal');
     if (heroFloatingGoal) {
       heroFloatingGoal.textContent = `${percentage}% of $${state.goalUSD.toLocaleString()}`;
     }
+
+    const heroGoalLabel = document.getElementById('hero-goal-label');
+    if (heroGoalLabel) heroGoalLabel.textContent = `Raised of $${state.goalUSD.toLocaleString()} Goal`;
+  }
+
+  function updatePhaseUI() {
+    const phasePill = document.getElementById('phase-pill');
+    if (phasePill) phasePill.textContent = `Phase ${state.phase} of 3`;
+
+    const heroPhaseLabel = document.getElementById('hero-phase-label');
+    if (heroPhaseLabel) heroPhaseLabel.textContent = `Phase ${state.phase} Official Fundraiser`;
+
+    document.querySelectorAll('.roadmap-card[data-phase]').forEach(card => {
+      const cardPhase = parseInt(card.getAttribute('data-phase'), 10);
+      const badge = card.querySelector('.roadmap-badge');
+      const isActive = cardPhase === state.phase;
+
+      card.classList.toggle('active', isActive);
+
+      if (badge) {
+        if (cardPhase < state.phase) {
+          badge.className = 'roadmap-badge completed';
+          badge.textContent = `Phase ${cardPhase} • Completed`;
+        } else if (isActive) {
+          badge.className = 'roadmap-badge current';
+          badge.textContent = `Phase ${cardPhase} • Active Now`;
+        } else {
+          badge.className = 'roadmap-badge upcoming';
+          badge.textContent = `Phase ${cardPhase} • Upcoming`;
+        }
+      }
+    });
+
+    const roadmapGoals = { 1: '$3,500', 2: '$25,000', 3: '$100,000+' };
+    document.querySelectorAll('.roadmap-card[data-phase]').forEach(card => {
+      const cardPhase = parseInt(card.getAttribute('data-phase'), 10);
+      const goalEl = card.querySelector('.roadmap-goal');
+      if (goalEl && roadmapGoals[cardPhase]) {
+        goalEl.textContent = `Goal ${roadmapGoals[cardPhase]}`;
+      }
+    });
+  }
+
+  async function loadCampaignFromServer() {
+    try {
+      const resp = await fetch('/api/campaign');
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (typeof data.raisedUSD === 'number' && data.phaseGoal) {
+        state.raisedUSD = data.raisedUSD;
+        state.goalUSD = data.phaseGoal;
+        state.supporterCount = data.supporters || state.supporterCount;
+        state.phase = data.phase || 1;
+        state.phaseGoal = data.phaseGoal;
+        updateProgressUI();
+        updatePhaseUI();
+      }
+    } catch (e) {}
   }
 
   function updateImpactCardsCurrency() {
@@ -320,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (calcDetail) calcDetail.textContent = impact.detail;
         if (calcDonateBtn) {
           calcDonateBtn.textContent = `Donate $${amount} Now`;
-          calcDonateBtn.setAttribute('onclick', `redirectToPayment(${amount})`);
+          calcDonateBtn.setAttribute('onclick', `donateAmount(${amount})`);
         }
       }
     });
@@ -479,15 +546,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (adoptionForm) {
+    const submitBtn = adoptionForm.querySelector('button[type="submit"]');
+
     adoptionForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('adoption-name').value.trim();
       const email = document.getElementById('adoption-email').value.trim();
       const message = document.getElementById('adoption-message').value.trim();
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (!name || !email || !message) {
         alert('Please fill out all fields.');
         return;
+      }
+      if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address (e.g. name@example.com).');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
       }
 
       try {
@@ -496,9 +575,14 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, message })
         });
-        if (!resp.ok) throw new Error('Server error');
+        const data = await resp.json().catch(() => ({}));
+        if (!resp.ok) throw new Error(data.error || 'Server error');
       } catch (err) {
         alert('Failed to submit enquiry. Please try again or email us directly at compassionateanimalrescueeffor@gmail.com');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Enquiry';
+        }
         return;
       }
 
@@ -725,8 +809,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial Renders & Triggers
   updateProgressUI();
+  updatePhaseUI();
   renderCatalog('food');
   restoreDonationState();
+  loadCampaignFromServer();
 
   // Trigger initial visible state for above-the-fold elements
   setTimeout(() => {

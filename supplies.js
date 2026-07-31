@@ -3,12 +3,7 @@
    Complete E-Commerce Donation Catalog Dataset & Unique Image Engine
    ========================================================================== */
 
-const PAYMENT_URL = 'https://donate.care-animal-rescue.org';
-
 const state = {
-  currency: 'USD',
-  currencySymbols: { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$' },
-  exchangeRates: { USD: 1.0, EUR: 0.92, GBP: 0.78, CAD: 1.35, AUD: 1.52 },
   filters: {
     animal: 'all',
     category: 'all',
@@ -767,11 +762,8 @@ function initCatalogEngine() {
       if (noProductsEl) noProductsEl.style.display = 'none';
     }
 
-    const rate = state.exchangeRates[state.currency] || 1;
-    const symbol = state.currencySymbols[state.currency] || '$';
-
     gridEl.innerHTML = filtered.map(p => {
-      const convertedPrice = (p.price * rate).toFixed(2);
+      const convertedPrice = p.price.toFixed(2);
       const qty = state.donationBag[p.id] || 0;
       const isWished = state.wishlist[p.id];
       const priorityClass = p.priority === 'Critical' ? 'priority-critical' : p.priority === 'High' ? 'priority-high' : 'priority-standard';
@@ -817,7 +809,7 @@ function initCatalogEngine() {
             <div class="card-price-row">
               <div>
                 <span class="price-label">Estimated Retail Price (USD)</span>
-                <span class="card-price">${symbol}${convertedPrice}</span>
+                <span class="card-price">$${convertedPrice}</span>
               </div>
               <div class="needed-box">
                 <span class="stock-status">In Stock</span>
@@ -927,13 +919,10 @@ function initCatalogEngine() {
     const p = catalogProducts.find(prod => prod.id === pId);
     if (!p) return;
 
-    const rate = state.exchangeRates[state.currency] || 1;
-    const symbol = state.currencySymbols[state.currency] || '$';
-
     if (galleryImg) galleryImg.src = p.img;
     if (galleryTitle) galleryTitle.textContent = `${p.brand} ${p.name}`;
     if (gallerySpecs) gallerySpecs.textContent = `${p.size} • ${p.weight} • ${p.purpose} • Rating: ${p.rating} ★ (${p.reviews} reviews)`;
-    if (galleryPrice) galleryPrice.textContent = `${symbol}${(p.price * rate).toFixed(2)}`;
+    if (galleryPrice) galleryPrice.textContent = `$${p.price.toFixed(2)}`;
 
     if (galleryModal) {
       galleryModal.classList.add('active');
@@ -984,7 +973,7 @@ function initCatalogEngine() {
   };
 
   function saveCartToLocalStorage() {
-    const cartData = { items: state.donationBag, currency: state.currency };
+    const cartData = { items: state.donationBag };
     localStorage.setItem('care_donation_cart', JSON.stringify(cartData));
   }
 
@@ -1005,29 +994,15 @@ function initCatalogEngine() {
       }
     });
 
-    const rate = state.exchangeRates[state.currency] || 1;
-    const symbol = state.currencySymbols[state.currency] || '$';
-    const totalConverted = (totalPriceUSD * rate).toFixed(2);
-
     if (bagBar) {
       if (totalItems > 0) {
         bagBar.classList.add('visible');
         if (bagCountEl) bagCountEl.textContent = `${totalItems} Item${totalItems > 1 ? 's' : ''} Selected`;
-        if (bagTotalEl) bagTotalEl.textContent = `${symbol}${totalConverted}`;
+        if (bagTotalEl) bagTotalEl.textContent = `$${totalPriceUSD.toFixed(2)}`;
       } else {
         bagBar.classList.remove('visible');
       }
     }
-  }
-
-  // --- CURRENCY SELECTOR ---
-  const currencySelect = document.getElementById('currency-select');
-  if (currencySelect) {
-    currencySelect.addEventListener('change', (e) => {
-      state.currency = e.target.value;
-      renderProducts();
-      updateBagBar();
-    });
   }
 
   // Initial Render

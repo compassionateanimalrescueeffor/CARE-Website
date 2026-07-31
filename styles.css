@@ -4056,4 +4056,188 @@ button, input, select {
   }
 }
 
+/* ==========================================================================
+   ELDERLY-FRIENDLY MOBILE OPTIMIZATIONS (stabilization pass)
+   ========================================================================== */
+
+.roadmap-badge.completed {
+  background-color: #D1FAE5;
+  color: #047857;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Bigger, easier-to-tap buttons and controls */
+  .btn {
+    min-height: 48px;
+    white-space: normal;
+  }
+  .btn-large {
+    min-height: 54px;
+  }
+  .btn-sm {
+    min-height: 44px;
+  }
+  .qty-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
+  }
+  .icon-action-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .freq-btn {
+    padding: 0.7rem 1.4rem;
+    font-size: 1rem;
+  }
+
+  /* Easier-to-read form fields */
+  .form-input,
+  .newsletter-input,
+  .modal-input {
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
+  }
+  .preset-btn {
+    min-width: 84px;
+    padding: 0.75rem 0.4rem;
+    font-size: 1.05rem;
+  }
+
+  /* Hero stats stack cleanly on narrow screens */
+  .hero-stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .hero-stat-item h4 {
+    font-size: 1.6rem;
+  }
+
+  /* Campaign progress metrics stack */
+  .progress-metrics {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Impact cards: full-width donate buttons */
+  .impact-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .impact-card .btn {
+    width: 100%;
+  }
+
+  /* Sticky donation bag bar stacks on mobile */
+  .bag-bar-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .bag-bar-container .btn {
+    width: 100%;
+  }
+
+  /* Modals stay scrollable and usable on small screens */
+  .donation-modal,
+  .modal-container {
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+
+  /* Adoption form: full-width actions */
+  .adoption-form .btn {
+    width: 100%;
+  }
+
+  /* Supplies page: search, filters, sort */
+  .catalog-search-wrap {
+    padding: 0 0.5rem;
+  }
+  .catalog-meta-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sort-box {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .sort-select {
+    flex-grow: 1;
+    width: 100%;
+  }
+  .filter-card {
+    padding: 1.25rem;
+  }
+  .filter-chip {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.875rem;
+  }
+
+  /* Product cards: stack action row */
+  .card-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .card-actions-row .qty-selector {
+    justify-content: center;
+  }
+
+  /* Checkout cart items stack on mobile */
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .cart-item-image {
+    width: 64px;
+    height: 64px;
+  }
+  .cart-item-meta {
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  /* Review items stack */
+  .review-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  /* Checkout actions stack */
+  .checkout-actions {
+    flex-direction: column;
+  }
+  .checkout-actions .btn,
+  .checkout-actions a.btn {
+    width: 100%;
+  }
+
+  /* Payment summary becomes static on mobile */
+  .payment-summary-card {
+    position: static;
+  }
+
+  /* Nav CTA fits narrow screens */
+  .nav-actions .btn {
+    padding: 0.7rem 1.1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Success overlay actions stack */
+  .success-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .success-actions .btn {
+    width: 100%;
+  }
+}
+
 
