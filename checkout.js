@@ -388,7 +388,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.checkout_paypal || window.paypal) { renderCheckoutButtons(); return; }
 
     const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&enable-funding=card`;
+    let sdkSrc = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&enable-funding=card`;
+    if (appState.donationType === 'monthly') sdkSrc += '&vault=true&intent=subscription';
+    script.src = sdkSrc;
     script.setAttribute('data-namespace', 'checkout_paypal');
     script.onload = renderCheckoutButtons;
     script.onerror = () => {

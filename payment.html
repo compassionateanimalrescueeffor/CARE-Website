@@ -434,7 +434,10 @@
       if (window.paypal_sdk || window.paypal) { renderPayPalButtons(); return; }
 
       const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&enable-funding=card`;
+      const isMonthly = donationData.freq === 'monthly';
+      let sdkSrc = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&enable-funding=card`;
+      if (isMonthly) sdkSrc += '&vault=true&intent=subscription';
+      script.src = sdkSrc;
       script.setAttribute('data-namespace', 'paypal_sdk');
       script.onload = renderPayPalButtons;
       script.onerror = () => {
