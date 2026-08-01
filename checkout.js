@@ -401,6 +401,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(script);
   }
 
+  function parsePayPalResponse(resp) {
+    return resp.text().then(function(text) {
+      if (!resp.ok) {
+        throw new Error('Server error ' + resp.status + (text ? ': ' + text : ' (empty response)'));
+      }
+      const ct = resp.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) {
+        throw new Error('Unexpected response from server (' + resp.status + '): ' + (text || 'empty response'));
+      }
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        throw new Error('Invalid JSON from server: ' + text);
+      }
+    });
+  }
+
   function renderCheckoutButtons() {
     const sdk = window.checkout_paypal || window.paypal;
     if (!sdk || checkoutPaypalRendered) return;
@@ -415,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: amt, currency: 'USD' })
-        }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d.id; });
+        }).then(parsePayPalResponse).then(d => { if (d.error) throw new Error(d.error); return d.id; });
       },
       onApprove: handleCheckoutSuccess,
       onError: function(err) { alert('Payment failed: ' + (err.message || 'Please try again.')); }
@@ -425,14 +442,14 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: amt, currency: 'USD' })
-        }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d.id; });
+        }).then(parsePayPalResponse).then(d => { if (d.error) throw new Error(d.error); return d.id; });
       },
       onApprove: function(data) {
         return fetch('/api/paypal/capture-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ orderId: data.orderID })
-        }).then(r => r.json()).then(d => {
+        }).then(parsePayPalResponse).then(d => {
           if (d.error) throw new Error(d.error);
           handleCheckoutSuccess();
         });
