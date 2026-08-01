@@ -396,7 +396,7 @@
         try { donationData = { ...donationData, ...JSON.parse(direct) }; } catch(e) {}
       }
       const checkout = localStorage.getItem('care_checkout');
-      if (checkout) {
+      if (checkout && !direct) {
         try {
           const d = JSON.parse(checkout);
           if (d.donationType) donationData.freq = d.donationType;

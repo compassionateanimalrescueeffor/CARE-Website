@@ -18,7 +18,7 @@ const state = {
   donationBag: {} // productId -> quantity
 };
 
-// --- COMPLETE COMPREHENSIVE PRODUCTS DATASET (35 Unique Products with Dedicated Photography) ---
+// --- COMPLETE PRODUCTS DATASET (37 Unique Products with Dedicated Photography) ---
 const catalogProducts = [
   // 🐾 1. FOOD & NUTRITION
   {
@@ -38,7 +38,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.8,
     reviews: 1420,
-    img: 'assets/products/cat_food_bag.jpg'
+    img: 'assets/products/purina-cat-chow.jpg'
   },
   {
     id: 'purina-one-cat-16',
@@ -51,32 +51,32 @@ const catalogProducts = [
     ageGroup: 'adult',
     env: 'indoor',
     purpose: 'Premium Immune Support',
-    desc: 'Real chicken first ingredient promoting lean muscle and healthy heart for shelter cats.',
+    desc: 'Real chicken first ingredient promoting lean muscle and a healthy heart for shelter cats.',
     price: 31.99,
     priority: 'High',
     needed: 12,
     rating: 4.9,
     reviews: 980,
-    img: 'assets/products/cat_food_bag.jpg'
+    img: 'assets/products/purina-one-cat-food.jpg'
   },
   {
     id: 'purina-one-dog-31',
     catId: 'food',
-    name: 'Purina ONE SmartBlend Dry Dog Food',
+    name: 'Purina ONE High Protein Dog Food',
     brand: 'Purina ONE',
-    size: '31.1 lb Bag',
-    weight: '31.3 lbs',
+    size: '30 lb Bag',
+    weight: '30.8 lbs',
     animal: 'dog',
     ageGroup: 'adult',
     env: 'indoor',
-    purpose: 'Canine Joint & Muscle Kibble',
-    desc: 'Digestible formula with glucosamine for joint health and radiant coat.',
-    price: 44.99,
+    purpose: 'Canine Muscle & Joint Support',
+    desc: 'High-protein real meat formula that helps build strong muscles and supports healthy joints.',
+    price: 31.99,
     priority: 'Critical',
     needed: 10,
     rating: 4.8,
     reviews: 2150,
-    img: 'assets/products/dog_food_bag.jpg'
+    img: 'assets/products/purina-one-dog-food.jpg'
   },
   {
     id: 'fancy-feast-24',
@@ -95,7 +95,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.9,
     reviews: 3120,
-    img: 'assets/products/cat_food_wet.jpg'
+    img: 'assets/products/fancy-feast-wet-cat-food.jpg'
   },
   {
     id: 'friskies-wet-40',
@@ -114,7 +114,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.7,
     reviews: 1840,
-    img: 'assets/products/cat_food_wet.jpg'
+    img: 'assets/products/purina-friskies.jpg'
   },
   {
     id: 'pedigree-wet-12',
@@ -133,7 +133,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.6,
     reviews: 1120,
-    img: 'assets/products/dog_food_bag.jpg'
+    img: 'assets/products/pedigree-wet-dog-food.jpg'
   },
   {
     id: 'kmr-formula',
@@ -152,7 +152,7 @@ const catalogProducts = [
     needed: 12,
     rating: 4.9,
     reviews: 950,
-    img: 'assets/products/kitten_formula.jpg'
+    img: 'assets/products/kmr-kitten-formula.jpg'
   },
   {
     id: 'baby-food-meat',
@@ -165,13 +165,13 @@ const catalogProducts = [
     ageGroup: 'kitten-puppy',
     env: 'indoor',
     purpose: 'Sick Animal Appetite Triage',
-    desc: 'Pure chicken and beef puree with no onion/garlic, used to entice sick animals to eat.',
+    desc: 'Pure chicken and beef puree with no onion or garlic, used to entice sick animals to eat.',
     price: 18.00,
     priority: 'High',
     needed: 20,
     rating: 4.9,
     reviews: 620,
-    img: 'assets/products/kitten_formula.jpg'
+    img: 'assets/products/gerber-baby-food.jpg'
   },
   {
     id: 'dog-treats-large',
@@ -190,7 +190,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.8,
     reviews: 2850,
-    img: 'assets/products/dog_food_bag.jpg'
+    img: 'assets/products/milkbone-dog-biscuits.jpg'
   },
   {
     id: 'cat-treats-temptations',
@@ -203,13 +203,13 @@ const catalogProducts = [
     ageGroup: 'adult',
     env: 'indoor',
     purpose: 'Feline Socialization Reward',
-    desc: 'Calorie-dense salmon treats used for underweight cat rehab and stress relief.',
+    desc: 'Calorie-dense treats used for underweight cat rehab and stress relief.',
     price: 8.49,
     priority: 'Standard',
     needed: 25,
     rating: 4.8,
     reviews: 4100,
-    img: 'assets/products/cat_food_bag.jpg'
+    img: 'assets/products/temptations-cat-treats.jpg'
   },
 
   // 💊 2. MEDICAL SUPPLIES
@@ -230,26 +230,45 @@ const catalogProducts = [
     needed: 30,
     rating: 4.8,
     reviews: 740,
-    img: 'assets/products/cat_dewormer_box.jpg'
+    img: 'assets/products/bayer-tapeworm-dewormer.jpg'
   },
   {
     id: 'frontline-cat',
     catId: 'medical',
-    name: 'Frontline Plus Flea & Tick Treatment',
+    name: 'Frontline Plus Flea & Tick Treatment (Cats)',
     brand: 'Frontline',
     size: '3 Dose Pack',
     weight: '0.2 lbs',
     animal: 'cat',
     ageGroup: 'adult',
     env: 'outdoor',
-    purpose: 'Topical Parasite Control',
+    purpose: 'Topical Feline Parasite Control',
     desc: 'Fast-acting topical dose killing fleas, ticks, and chewing lice on contact.',
-    price: 38.99,
+    price: 38.90,
     priority: 'Critical',
     needed: 25,
     rating: 4.7,
     reviews: 1650,
-    img: 'assets/products/cat_dewormer_box.jpg'
+    img: 'assets/products/frontline-plus-cat.jpg'
+  },
+  {
+    id: 'frontline-dog',
+    catId: 'medical',
+    name: 'Frontline Plus Flea & Tick Treatment (Dogs)',
+    brand: 'Frontline',
+    size: '3 Dose Pack',
+    weight: '0.3 lbs',
+    animal: 'dog',
+    ageGroup: 'adult',
+    env: 'outdoor',
+    purpose: 'Topical Canine Parasite Control',
+    desc: 'Fast-acting topical dose killing fleas, ticks, and chewing lice on contact.',
+    price: 38.99,
+    priority: 'Critical',
+    needed: 20,
+    rating: 4.7,
+    reviews: 1720,
+    img: 'assets/products/frontline-plus-dog.jpg'
   },
   {
     id: 'flea-comb',
@@ -268,7 +287,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.7,
     reviews: 890,
-    img: 'assets/products/medical_first_aid.jpg'
+    img: 'assets/products/safari-flea-comb.jpg'
   },
 
   // 🛏 3. BEDDING & COMFORT
@@ -279,7 +298,7 @@ const catalogProducts = [
     brand: 'Bedsure',
     size: '23" Round Bed',
     weight: '2.1 lbs',
-    animal: 'cat',
+    animal: 'shared',
     ageGroup: 'all',
     env: 'indoor',
     purpose: 'Calming Shelter Bedding',
@@ -289,7 +308,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.9,
     reviews: 3500,
-    img: 'assets/products/cat_bed_plush.jpg'
+    img: 'assets/products/bedsure-plush-pet-bed.jpg'
   },
   {
     id: 'dog-bed-ortho',
@@ -308,12 +327,12 @@ const catalogProducts = [
     needed: 8,
     rating: 4.8,
     reviews: 2600,
-    img: 'assets/products/cat_bed_plush.jpg'
+    img: 'assets/products/furhaven-dog-bed.jpg'
   },
   {
     id: 'fleece-blankets',
     catId: 'bedding',
-    name: 'Washable Fleece Pet Blanket Throws',
+    name: 'Washable Fleece Pet Blanket Throws (3 pk)',
     brand: 'Frisco',
     size: 'Pack of 3 (30" x 40")',
     weight: '1.2 lbs',
@@ -327,7 +346,7 @@ const catalogProducts = [
     needed: 30,
     rating: 4.8,
     reviews: 1950,
-    img: 'assets/products/fleece_pet_blanket.jpg'
+    img: 'assets/products/fleece-pet-blankets.jpg'
   },
   {
     id: 'scratching-post',
@@ -346,7 +365,7 @@ const catalogProducts = [
     needed: 12,
     rating: 4.9,
     reviews: 1480,
-    img: 'assets/products/cat_bed_plush.jpg'
+    img: 'assets/products/smartcat-scratching-post.jpg'
   },
   {
     id: 'neonatal-heating-pad',
@@ -365,7 +384,7 @@ const catalogProducts = [
     needed: 10,
     rating: 4.9,
     reviews: 820,
-    img: 'assets/products/cat_bed_plush.jpg'
+    img: 'assets/products/kh-heated-pad.jpg'
   },
   {
     id: 'new-towels',
@@ -384,7 +403,7 @@ const catalogProducts = [
     needed: 25,
     rating: 4.7,
     reviews: 2100,
-    img: 'assets/products/cat_bed_plush.jpg'
+    img: 'assets/products/absorbent-cotton-towels.jpg'
   },
 
   // 🧹 4. CLEANING & HYGIENE (Shared)
@@ -405,12 +424,12 @@ const catalogProducts = [
     needed: 25,
     rating: 4.9,
     reviews: 1350,
-    img: 'assets/products/disinfectant_bottle.jpg'
+    img: 'assets/products/rescue-disinfectant.jpg'
   },
   {
     id: 'paper-towels-12',
     catId: 'cleaning',
-    name: 'Bounty Quick-Size Paper Towels',
+    name: 'Bounty Quick-Size Paper Towels (12 Double Rolls)',
     brand: 'Bounty',
     size: '12 Double Rolls',
     weight: '5.8 lbs',
@@ -424,7 +443,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.9,
     reviews: 4500,
-    img: 'assets/products/paper_towels_pack.jpg'
+    img: 'assets/products/bounty-paper-towels.jpg'
   },
   {
     id: 'laundry-detergent-large',
@@ -443,26 +462,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.8,
     reviews: 3800,
-    img: 'assets/products/disinfectant_bottle.jpg'
-  },
-  {
-    id: 'nitrile-gloves-box',
-    catId: 'cleaning',
-    name: 'Medical-Grade Nitrile Exam Gloves',
-    brand: 'Medline',
-    size: 'Box of 100 Gloves',
-    weight: '1.1 lbs',
-    animal: 'shared',
-    ageGroup: 'all',
-    env: 'outdoor',
-    purpose: 'Contagion Protection & Triage',
-    desc: 'Powder-free latex-free nitrile gloves for medical exams and cage cleaning.',
-    price: 14.99,
-    priority: 'High',
-    needed: 30,
-    rating: 4.8,
-    reviews: 1720,
-    img: 'assets/products/disinfectant_bottle.jpg'
+    img: 'assets/products/tide-laundry-detergent.jpg'
   },
   {
     id: 'heavy-trash-bags',
@@ -481,7 +481,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.7,
     reviews: 2900,
-    img: 'assets/products/disinfectant_bottle.jpg'
+    img: 'assets/products/hefty-trash-bags.jpg'
   },
   {
     id: 'unscented-baby-wipes',
@@ -500,12 +500,31 @@ const catalogProducts = [
     needed: 30,
     rating: 4.8,
     reviews: 5100,
-    img: 'assets/products/disinfectant_bottle.jpg'
+    img: 'assets/products/huggies-wipes.jpg'
+  },
+  {
+    id: 'nitrile-gloves-box',
+    catId: 'cleaning',
+    name: 'Medical-Grade Nitrile Exam Gloves',
+    brand: 'Medline',
+    size: 'Box of 100 Gloves',
+    weight: '1.1 lbs',
+    animal: 'shared',
+    ageGroup: 'all',
+    env: 'outdoor',
+    purpose: 'Contagion Protection & Triage',
+    desc: 'Powder-free latex-free nitrile gloves for medical exams and cage cleaning.',
+    price: 14.99,
+    priority: 'High',
+    needed: 30,
+    rating: 4.8,
+    reviews: 1720,
+    img: 'assets/products/nitrile-exam-gloves.jpg'
   },
 
   // 🍽 5. FEEDING EQUIPMENT
   {
-    id: 'stainless-food-bowls',
+    id: 'heavy-duty-bowls',
     catId: 'feeding',
     name: 'Heavy-Duty Non-Tip Stainless Steel Bowls',
     brand: 'Frisco',
@@ -521,7 +540,26 @@ const catalogProducts = [
     needed: 20,
     rating: 4.8,
     reviews: 1450,
-    img: 'assets/products/stainless_pet_bowls.jpg'
+    img: 'assets/products/heavy-duty-bowls.jpg'
+  },
+  {
+    id: 'feeding-equipment-kit',
+    catId: 'feeding',
+    name: 'Feeding Equipment Care Kit',
+    brand: 'Frisco',
+    size: 'Food & Water Set',
+    weight: '1.3 lbs',
+    animal: 'shared',
+    ageGroup: 'all',
+    env: 'indoor',
+    purpose: 'Daily Feeding Stations',
+    desc: 'Complete food and water feeding set for shelter cages and recovery kennels.',
+    price: 10.49,
+    priority: 'High',
+    needed: 20,
+    rating: 4.7,
+    reviews: 1320,
+    img: 'assets/products/feeding-equipment.jpg'
   },
 
   // 🧸 6. TOYS & ENRICHMENT
@@ -542,7 +580,7 @@ const catalogProducts = [
     needed: 25,
     rating: 4.7,
     reviews: 1890,
-    img: 'assets/products/cat_food_bag.jpg'
+    img: 'assets/products/frisco-cat-track-toy.jpg'
   },
   {
     id: 'kong-dog-toy-large',
@@ -561,10 +599,10 @@ const catalogProducts = [
     needed: 20,
     rating: 4.9,
     reviews: 6200,
-    img: 'assets/products/dog_food_bag.jpg'
+    img: 'assets/products/kong-dog-toy.jpg'
   },
 
-  // 🚑 7. RESCUE EQUIPMENT (Shared)
+  // 🚑 7. RESCUE EQUIPMENT
   {
     id: 'plastic-cat-carrier',
     catId: 'rescue',
@@ -582,7 +620,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.8,
     reviews: 2100,
-    img: 'assets/products/hard_cat_carrier.jpg'
+    img: 'assets/products/petmate-cat-carrier.jpg'
   },
   {
     id: 'slip-lead-leashes',
@@ -601,7 +639,7 @@ const catalogProducts = [
     needed: 25,
     rating: 4.9,
     reviews: 1350,
-    img: 'assets/products/transport_crate.jpg'
+    img: 'assets/products/reflective-slip-leashes.jpg'
   },
   {
     id: 'crate-aluminum-36',
@@ -610,7 +648,7 @@ const catalogProducts = [
     brand: 'MidWest',
     size: '36" Medium/Large Crate',
     weight: '21.5 lbs',
-    animal: 'shared',
+    animal: 'dog',
     ageGroup: 'all',
     env: 'outdoor',
     purpose: 'Safe Canine Transport & Housing',
@@ -620,10 +658,10 @@ const catalogProducts = [
     needed: 10,
     rating: 4.8,
     reviews: 4800,
-    img: 'assets/products/transport_crate.jpg'
+    img: 'assets/products/midwest-crate.jpg'
   },
 
-  // 🏥 8. VETERINARY EQUIPMENT (Shared)
+  // 🏥 8. VETERINARY EQUIPMENT
   {
     id: 'syringes-feeding-kit',
     catId: 'vet',
@@ -641,7 +679,7 @@ const catalogProducts = [
     needed: 15,
     rating: 4.8,
     reviews: 790,
-    img: 'assets/products/medical_first_aid.jpg'
+    img: 'assets/products/petag-nursing-bottle-kit.jpg'
   },
   {
     id: 'triage-first-aid-bag',
@@ -660,7 +698,7 @@ const catalogProducts = [
     needed: 5,
     rating: 4.9,
     reviews: 350,
-    img: 'assets/products/medical_first_aid.jpg'
+    img: 'assets/products/curicyn-first-aid-kit.jpg'
   },
 
   // 🚽 9. LITTER & WASTE MANAGEMENT
@@ -681,7 +719,7 @@ const catalogProducts = [
     needed: 25,
     rating: 4.8,
     reviews: 3900,
-    img: 'assets/products/cat_litter_bag.jpg'
+    img: 'assets/products/fresh-step-cat-litter.jpg'
   },
   {
     id: 'puppy-pee-pads-100',
@@ -700,7 +738,7 @@ const catalogProducts = [
     needed: 20,
     rating: 4.8,
     reviews: 2400,
-    img: 'assets/products/dog_food_bag.jpg'
+    img: 'assets/products/glad-puppy-pads.jpg'
   }
 ];
 
